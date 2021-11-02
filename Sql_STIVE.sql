@@ -2,23 +2,6 @@
 #        Script MySQL.
 #------------------------------------------------------------
 
-
-#------------------------------------------------------------
-# Table: User
-#------------------------------------------------------------
-
-CREATE TABLE stive.User(
-        ID        Int  Auto_increment  NOT NULL ,
-        Mail           Varchar (100) NOT NULL,
-        Password       Varchar (50) NOT NULL ,
-        LastName       Varchar (50) NOT NULL ,
-        FirstName      Varchar (50) NOT NULL ,
-        Adress         Varchar (100) NOT NULL ,
-        Phone          varchar (50) NOT NULL
-	,CONSTRAINT User_PK PRIMARY KEY (ID)
-)ENGINE=InnoDB;
-
-
 #------------------------------------------------------------
 # Table: Role
 #------------------------------------------------------------
@@ -29,6 +12,23 @@ CREATE TABLE Role(
 	,CONSTRAINT Role_PK PRIMARY KEY (ID)
 )ENGINE=InnoDB;
 
+#------------------------------------------------------------
+# Table: User
+#------------------------------------------------------------
+
+CREATE TABLE stive.User(
+        ID        Int  Auto_increment  NOT NULL ,
+        Login          Varchar (50) NOT NULL ,
+        Password       Varchar (50) NOT NULL ,
+        LastName       Varchar (50) NOT NULL ,
+        FirstName      Varchar (50) NOT NULL ,
+        Adress         Varchar (100) NOT NULL ,
+        Phone          Int NOT NULL ,
+        Mail           Varchar (100) NOT NULL,
+        ID_Role        Int NOT NULL
+	,CONSTRAINT User_PK PRIMARY KEY (ID)
+        ,CONSTRAINT User0_FK FOREIGN KEY (ID_Role) REFERENCES Role(ID)
+)ENGINE=InnoDB;
 
 #------------------------------------------------------------
 # Table: Provider
@@ -72,6 +72,7 @@ CREATE TABLE Home(
 CREATE TABLE stive.Order(
         ID             Int  Auto_increment  NOT NULL ,
         Date           Date NOT NULL ,
+        Total          decimal NOT NULL,
         ID_User        Int NOT NULL
 	,CONSTRAINT Order_PK PRIMARY KEY (ID)
 
@@ -134,30 +135,18 @@ CREATE TABLE OrderForm(
 
 
 #------------------------------------------------------------
-# Table: UserRole
-#------------------------------------------------------------
-
-CREATE TABLE UserRole(
-        ID      Int NOT NULL ,
-        ID_Role Int NOT NULL
-	,CONSTRAINT UserRole_PK PRIMARY KEY (ID,ID_Role)
-
-	,CONSTRAINT UserRole_User_FK FOREIGN KEY (ID) REFERENCES User(ID)
-	,CONSTRAINT UserRole_Role0_FK FOREIGN KEY (ID_Role) REFERENCES Role(ID)
-)ENGINE=InnoDB;
-
-
-#------------------------------------------------------------
 # Table: ProductOrder
 #------------------------------------------------------------
 
 CREATE TABLE ProductOrder(
         ID          Int NOT NULL ,
         ID_Order    Int NOT NULL ,
-        Quantity    Int NOT NULL
-	,CONSTRAINT ProductOrder_PK PRIMARY KEY (ID,ID_Order)
+        ID_Product  Int NOT NULL ,
+        Quantity    Int NOT NULL,
+        Total       Decimal NOt NULL
+	,CONSTRAINT ProductOrder_PK PRIMARY KEY (ID)
 
-	,CONSTRAINT ProductOrder_Product_FK FOREIGN KEY (ID) REFERENCES Product(ID)
+	,CONSTRAINT ProductOrder_Product_FK FOREIGN KEY (ID_Product) REFERENCES Product(ID)
 	,CONSTRAINT ProductOrder_Order0_FK FOREIGN KEY (ID_Order) REFERENCES stive.Order(ID)
 )ENGINE=InnoDB;
 
@@ -169,10 +158,11 @@ CREATE TABLE ProductOrder(
 CREATE TABLE ProductOrderForm(
         ID                 Int NOT NULL ,
         ID_OrderForm       Int NOT NULL ,
+        ID_Product         Int NOT NULL ,
         Quantity           Int NOT NULL
-	,CONSTRAINT ProductOrderForm_PK PRIMARY KEY (ID,ID_OrderForm)
+	,CONSTRAINT ProductOrderForm_PK PRIMARY KEY (ID)
 
-	,CONSTRAINT ProductOrderForm_Product_FK FOREIGN KEY (ID) REFERENCES Product(ID)
+	,CONSTRAINT ProductOrderForm_Product_FK FOREIGN KEY (ID_Product) REFERENCES Product(ID)
 	,CONSTRAINT ProductOrderForm_OrderForm0_FK FOREIGN KEY (ID_OrderForm) REFERENCES OrderForm(ID)
 )ENGINE=InnoDB;
 
