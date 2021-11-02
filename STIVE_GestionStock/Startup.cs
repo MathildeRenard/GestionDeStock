@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using STIVE_GestionStock.Services;
 
 namespace STIVE_GestionStock
 {
@@ -23,6 +24,10 @@ namespace STIVE_GestionStock
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddSession();
+            services.AddHttpContextAccessor();
+            //Ajouter dans le conteneur de dependance le login
+            services.AddTransient<ILogin, LoginService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,6 +46,7 @@ namespace STIVE_GestionStock
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {
