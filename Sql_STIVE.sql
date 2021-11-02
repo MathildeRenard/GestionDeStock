@@ -107,11 +107,11 @@ CREATE TABLE Product(
         Unit_price               Decimal NOT NULL ,
         Lot_Price                Decimal NOT NULL ,
         Quantity_lot             Int NOT NULL ,
+        URL_Photo                Text NOT NULL,
         ID_Home                  Int NOT NULL ,
         ID_Warehouse             Int NOT NULL ,
         ID_Family                Int NOT NULL
 	,CONSTRAINT Product_PK PRIMARY KEY (ID)
-
 	,CONSTRAINT Product_Home_FK FOREIGN KEY (ID_Home) REFERENCES Home(ID)
 	,CONSTRAINT Product_Warehouse0_FK FOREIGN KEY (ID_Warehouse) REFERENCES Warehouse(ID)
 	,CONSTRAINT Product_Family1_FK FOREIGN KEY (ID_Family) REFERENCES Family(ID)
