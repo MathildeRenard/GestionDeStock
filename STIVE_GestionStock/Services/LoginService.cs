@@ -31,7 +31,7 @@ namespace STIVE_GestionStock.Services
             User u = User.GetUserLogin(login, password);
             if (u != null)
             {
-                _accessor.HttpContext.Session.SetString("login", u.Login);
+                _accessor.HttpContext.Session.SetString("login", u.Mail);
                 _accessor.HttpContext.Session.SetString("password", u.Password);
                 _accessor.HttpContext.Session.SetString("isLogged", "true");
                 return true;

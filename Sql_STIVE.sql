@@ -9,13 +9,12 @@
 
 CREATE TABLE stive.User(
         ID        Int  Auto_increment  NOT NULL ,
-        Login          Varchar (50) NOT NULL ,
+        Mail           Varchar (100) NOT NULL,
         Password       Varchar (50) NOT NULL ,
         LastName       Varchar (50) NOT NULL ,
         FirstName      Varchar (50) NOT NULL ,
         Adress         Varchar (100) NOT NULL ,
-        Phone          Int NOT NULL ,
-        Mail           Varchar (100) NOT NULL
+        Phone          varchar (50) NOT NULL
 	,CONSTRAINT User_PK PRIMARY KEY (ID)
 )ENGINE=InnoDB;
 

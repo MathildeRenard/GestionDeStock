@@ -8,25 +8,23 @@ namespace STIVE_GestionStock.Models
 {
     public class User
     {
-
-        private string login;
+        private string mail;
         private string password;
         private string lastname;
         private string firstname;
         private string adress;
         private int phone;
-        private string mail;
+
         public User()
         {
         }
 
-        public string Login { get => login; set => login = value; }
+        public string Mail { get => mail; set => mail = value; }
         public string Password { get => password; set => password = value; }
         public string Lastname { get => lastname; set => lastname = value; }
         public string Firstname { get => firstname; set => firstname = value; }
         public string Adress { get => adress; set => adress = value; }
         public int Phone { get => phone; set => phone = value; }
-        public string Mail { get => mail; set => mail = value; }
 
         public static User GetUserLogin(string l, string p)
         {
@@ -38,7 +36,7 @@ namespace STIVE_GestionStock.Models
             {
                 user = new User()
                 {
-                    Login = l,
+                    Mail = l,
                     Password = p
                 };
 
