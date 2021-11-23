@@ -10,7 +10,7 @@ namespace STIVE_GestionStock.Models
         private int id;
         private DateTime date;
         private User user;
-        private List<ProductOrder> productorderlist;
+        //private List<ProductOrder> productorderlist;
         public Order()
         {
         }

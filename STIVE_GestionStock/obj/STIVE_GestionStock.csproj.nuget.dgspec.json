@@ -1,28 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\yuuma\\Desktop\\Projet CUBE 4 Gestion Stock\\GestionDeStock\\STIVE_GestionStock\\STIVE_GestionStock.csproj": {}
+    "C:\\Users\\renar\\Documents\\GestionDeStock\\STIVE_GestionStock\\STIVE_GestionStock.csproj": {}
   },
   "projects": {
-    "C:\\Users\\yuuma\\Desktop\\Projet CUBE 4 Gestion Stock\\GestionDeStock\\STIVE_GestionStock\\STIVE_GestionStock.csproj": {
+    "C:\\Users\\renar\\Documents\\GestionDeStock\\STIVE_GestionStock\\STIVE_GestionStock.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\yuuma\\Desktop\\Projet CUBE 4 Gestion Stock\\GestionDeStock\\STIVE_GestionStock\\STIVE_GestionStock.csproj",
+        "projectUniqueName": "C:\\Users\\renar\\Documents\\GestionDeStock\\STIVE_GestionStock\\STIVE_GestionStock.csproj",
         "projectName": "STIVE_GestionStock",
-        "projectPath": "C:\\Users\\yuuma\\Desktop\\Projet CUBE 4 Gestion Stock\\GestionDeStock\\STIVE_GestionStock\\STIVE_GestionStock.csproj",
-        "packagesPath": "C:\\Users\\yuuma\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\yuuma\\Desktop\\Projet CUBE 4 Gestion Stock\\GestionDeStock\\STIVE_GestionStock\\obj\\",
+        "projectPath": "C:\\Users\\renar\\Documents\\GestionDeStock\\STIVE_GestionStock\\STIVE_GestionStock.csproj",
+        "packagesPath": "C:\\Users\\renar\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\renar\\Documents\\GestionDeStock\\STIVE_GestionStock\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\yuuma\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\renar\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://www.nuget.org/api/v2": {}
         },
         "frameworks": {
           "net5.0": {
@@ -67,7 +66,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -24,6 +24,7 @@ namespace STIVE_GestionStock.Controllers
 
         public IActionResult SubmitLogin(string login, string password)
         {
+           
             if (_login.LogIn(login, password))
             {
                 return RedirectToAction("Index", "Home");
@@ -33,5 +34,6 @@ namespace STIVE_GestionStock.Controllers
                 return RedirectToAction("Index", "Login", new { message = "Erreur de connexion" });
             }
         }
+       
     }
 }
