@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using System.Text;
+using System.Security.Cryptography;
 
 namespace STIVE_GestionStock.Models
 {
@@ -43,37 +44,50 @@ namespace STIVE_GestionStock.Models
         {
             User user = null;
             //Faire un select si le mot de passe et le login correspondent à ceux dans la base de données.
-            request = "SELECT Count(*) FROM User WHERE Login = @Login AND Password = @Password ";
+            request = "SELECT (Password) FROM User WHERE Login = @Login";
             connection = Db.Connection;
             command = new MySqlCommand(request, connection);
             command.Parameters.Add(new MySqlParameter("Login", login));
-            //Hashage du mot de passe
-            var bytes = new UTF8Encoding().GetBytes(password);
-            byte[] hashBytes;
-            using (var algorithm = new System.Security.Cryptography.SHA512Managed())
-            {
-                hashBytes = algorithm.ComputeHash(bytes);
-            }
-            string PasswordHash = Convert.ToBase64String(hashBytes);
-            command.Parameters.Add(new MySqlParameter("Password", PasswordHash));
+            
             connection.Open();
-            //vérifier si le login et le mot de passe sont présents dans la base de données
-            //Faire une compraison dans la base de données.
-            int count = Convert.ToInt32(command.ExecuteScalar());
-            if (count == 1)
-                  {
-                user = new User()
-                {
-                    Login = login ,
-                    Password = password
-                      };
 
-                  }
+            MySqlDataReader passwordHash= command.ExecuteReader();
+            passwordHash.Read();
+
+
+            //S'il y a eu une erreur lors de la saisie du login, le résultat de la requête sql lèvera une exception
+            try
+            {
+                String SavedPasswordHash = passwordHash["Password"].ToString();
+
+                //Vérifier si le mot de passe correspond à celui de la base de données
+                byte[] hashBytes = Convert.FromBase64String(SavedPasswordHash);
+                byte[] salt = new byte[16];
+                Array.Copy(hashBytes, 0, salt, 0, 16);
+                var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 100000);
+                byte[] hash = pbkdf2.GetBytes(20);
+
+                for (int i = 0; i < 20; i++)
+                    if (hashBytes[i + 16] == hash[i])
+                    {
+                        user = new User()
+                        {
+                            Login = login,
+                            Password = password
+                        };
+
+                    }
+            }
+            //En cas d'erreur sur le login saisi, la variable user restera à sa valeur initiale "null" et la vue renverra un message d'erreur
+            catch (MySqlException)
+            {
+
+            }
             command.Dispose();
             connection.Close();
-            
+
             return user;
-        }
+            }
 
         //Creer un nouveau compte dans la base de données
         public void Create(String Login,String Password,String LastName,String FirstName, String Adress, Int32 Phone, String Mail)
@@ -84,14 +98,17 @@ namespace STIVE_GestionStock.Models
             connection = Db.Connection;
             command = new MySqlCommand(request, connection);
             command.Parameters.Add(new MySqlParameter("@login", Login));
+
             //Hashage du mot de passe
-            var bytes = new UTF8Encoding().GetBytes(Password);
-            byte[] hashBytes;
-            using (var algorithm = new System.Security.Cryptography.SHA512Managed())
-            {
-                hashBytes = algorithm.ComputeHash(bytes);
-            }
+            byte[] salt;
+            new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
+            var pbkdf2 = new Rfc2898DeriveBytes(Password, salt, 100000);
+            byte[] hash = pbkdf2.GetBytes(20);
+            byte[] hashBytes = new byte[36];
+            Array.Copy(salt, 0, hashBytes, 0, 16);
+            Array.Copy(hash, 0, hashBytes, 16, 20);
             string PasswordHash = Convert.ToBase64String(hashBytes);
+
             command.Parameters.Add(new MySqlParameter("@password", PasswordHash));
             command.Parameters.Add(new MySqlParameter("@lastName", LastName));
             command.Parameters.Add(new MySqlParameter("@firstName", FirstName));
