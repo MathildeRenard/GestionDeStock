@@ -40,7 +40,7 @@ namespace STIVE_GestionStock.Controllers
         }
         public IActionResult Register()
         {
-            return View("/Views/Register/Register.cshtml");
+            return View("/Views/Register/Index.cshtml");
         }
     }
 }

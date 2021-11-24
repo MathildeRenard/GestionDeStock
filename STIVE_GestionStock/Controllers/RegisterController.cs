@@ -16,26 +16,27 @@ namespace STIVE_GestionStock.Controllers
             return View();
         }
 
-        public IActionResult Index(string message)
-        {
-            ViewBag.Message = message;
-            return View();
-        }
-
         // GET: HomeController1/Details/5
         public IActionResult SubmitRegister(String login,String password,String lastname,String firstname,String adress,Int32 phone,String mailadress)
         {
             User user = new User();
             User result = user.Create(login, password,lastname,firstname,adress,phone,mailadress);
-            if (result != null)
+            if (result != null && result.Login != "erreur")
             {
                 //Si user n'est pas null,connecter le compte
                 return RedirectToAction("Index", "Home");
             }
+            else if (result != null && result.Login == "erreur")
+            {
+                ViewBag.Message = "Ce pseudo n'est pas disponible.";
+                //Si user est null mettre un message d'erreur
+                return View("Index");
+            }
             else
             {
+                ViewBag.Message = "Les champs n'ont pas été bien remplis.";
                 //Si user est null mettre un message d'erreur
-                return RedirectToAction("Register", "Register", new { message = "Erreur de connexion" });
+                return View("Index");
             }
         }
 

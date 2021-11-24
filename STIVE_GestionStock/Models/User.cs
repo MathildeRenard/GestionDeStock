@@ -19,7 +19,7 @@ namespace STIVE_GestionStock.Models
         private string firstName;
         private string adress;
         private string phone;
-        private Role role = new Role();
+        static private Role role = new Role();
         private static string request;
         private static MySqlConnection connection;
         private static MySqlCommand command;
@@ -144,7 +144,14 @@ namespace STIVE_GestionStock.Models
                     {
                         Login = Login,
                         Password = Password,
-                        role = role
+                        //role = role
+                    };
+                }
+                else
+                {
+                    user = new User()
+                    {
+                        Login = "erreur"
                     };
                 }
             }
