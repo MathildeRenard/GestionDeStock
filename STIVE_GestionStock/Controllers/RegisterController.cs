@@ -34,7 +34,7 @@ namespace STIVE_GestionStock.Controllers
             }
             else
             {
-                ViewBag.Message = "Les champs n'ont pas été bien remplis.";
+                ViewBag.Message = "Veuillez ajouter les informations manquantes.";
                 //Si user est null mettre un message d'erreur
                 return View("Index");
             }

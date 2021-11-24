@@ -139,14 +139,25 @@ namespace STIVE_GestionStock.Models
                 // si Le login n'existe pas déja
                 if (!check)
                 {
-                    command.ExecuteScalar();
-                    user = new User()
+                    //Ajouter un try si la saisie du login n'a pas été faite
+                    try
                     {
-                        Login = Login,
-                        Password = Password,
-                        //role = role
-                    };
+                        command.ExecuteScalar();
+
+                        user = new User()
+                        {
+                            Login = Login,
+                            Password = Password,
+                            //role = role
+                        };
+                    }
+                    catch (MySqlException)
+                    {
+                       
+                    }
                 }
+                /*Si le login existe déja on initialise le login en "erreur" afin de pouvoir 
+                 préciser dans le controlleur, le message d'erreur qui sera envoyé à la vue.*/
                 else
                 {
                     user = new User()
