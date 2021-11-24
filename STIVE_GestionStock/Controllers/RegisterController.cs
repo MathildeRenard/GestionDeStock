@@ -23,84 +23,20 @@ namespace STIVE_GestionStock.Controllers
             User result = user.Create(login, password,lastname,firstname,adress,phone,mailadress);
             if (result != null && result.Login != "erreur")
             {
-                //Si user n'est pas null,connecter le compte
+                //Si user n'est pas null,connecter le compte(pas encore fait)
                 return RedirectToAction("Index", "Home");
             }
             else if (result != null && result.Login == "erreur")
             {
-                ViewBag.Message = "Ce pseudo n'est pas disponible.";
-                //Si user est null mettre un message d'erreur
+                ViewBag.Message = "Ce pseudo n'est pas disponible.";                
                 return View("Index");
             }
             else
             {
                 ViewBag.Message = "Veuillez ajouter les informations manquantes.";
-                //Si user est null mettre un message d'erreur
                 return View("Index");
             }
         }
-
-        // GET: HomeController1/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: HomeController1/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: HomeController1/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: HomeController1/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: HomeController1/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: HomeController1/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+     
     }
 }
