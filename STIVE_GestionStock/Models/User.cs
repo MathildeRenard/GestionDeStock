@@ -19,7 +19,7 @@ namespace STIVE_GestionStock.Models
         private string firstName;
         private string adress;
         private string phone;
-        private Role role;
+        private Role role = new Role();
         private static string request;
         private static MySqlConnection connection;
         private static MySqlCommand command;
@@ -44,22 +44,22 @@ namespace STIVE_GestionStock.Models
         {
             User user = null;
             //Faire un select si le mot de passe et le login correspondent à ceux dans la base de données.
-            request = "SELECT (Password) FROM User WHERE Login = @Login";
+            request = "SELECT Password,User.ID_Role FROM User WHERE Login = @Login";
             connection = Db.Connection;
             command = new MySqlCommand(request, connection);
             command.Parameters.Add(new MySqlParameter("Login", login));
             
             connection.Open();
-
             MySqlDataReader passwordHash= command.ExecuteReader();
             passwordHash.Read();
-
-
+   
             //S'il y a eu une erreur lors de la saisie du login, le résultat de la requête sql lèvera une exception
             try
             {
                 String SavedPasswordHash = passwordHash["Password"].ToString();
-
+                //role à ajouter dans la classe role (pour l'instant cela crée une erreur)
+                //role.id = Convert.ToInt32(passwordHash["ID_Role"]);
+               
                 //Vérifier si le mot de passe correspond à celui de la base de données
                 byte[] hashBytes = Convert.FromBase64String(SavedPasswordHash);
                 byte[] salt = new byte[16];
@@ -73,13 +73,19 @@ namespace STIVE_GestionStock.Models
                         user = new User()
                         {
                             Login = login,
-                            Password = password
+                            Password = password,
+                            //role = role
+                           
                         };
 
                     }
             }
             //En cas d'erreur sur le login saisi, la variable user restera à sa valeur initiale "null" et la vue renverra un message d'erreur
             catch (MySqlException)
+            {
+
+            }
+            catch (ArgumentNullException)
             {
 
             }
@@ -90,36 +96,67 @@ namespace STIVE_GestionStock.Models
             }
 
         //Creer un nouveau compte dans la base de données
-        public void Create(String Login,String Password,String LastName,String FirstName, String Adress, Int32 Phone, String Mail)
+        public User Create(String Login,String Password,String LastName,String FirstName, String Adress, Int32 Phone, String Mail)
         {
-            //Pour l'instant laisser le role par defaut à 2(Client)
-            Int32 Role = 2;
+            User user = null;
+            //Mettre le role par defaut à 2(Client)
+            role.Id = 2;
             request = "INSERT INTO User ( Login, Password, LastName, FirstName, Adress, Phone, Mail,ID_Role) values (@login, @password, @lastName, @firstName, @adress, @phone, @mail,@role)";
+            //requete pour éviter qu'il y ait deux fois le même login dans la base de données
+            String requestCheck = "SELECT COUNT(*) from User WHERE Login = @login ";
             connection = Db.Connection;
             command = new MySqlCommand(request, connection);
-            command.Parameters.Add(new MySqlParameter("@login", Login));
-
-            //Hashage du mot de passe
-            byte[] salt;
-            new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
-            var pbkdf2 = new Rfc2898DeriveBytes(Password, salt, 100000);
-            byte[] hash = pbkdf2.GetBytes(20);
-            byte[] hashBytes = new byte[36];
-            Array.Copy(salt, 0, hashBytes, 0, 16);
-            Array.Copy(hash, 0, hashBytes, 16, 20);
-            string PasswordHash = Convert.ToBase64String(hashBytes);
-
-            command.Parameters.Add(new MySqlParameter("@password", PasswordHash));
-            command.Parameters.Add(new MySqlParameter("@lastName", LastName));
-            command.Parameters.Add(new MySqlParameter("@firstName", FirstName));
-            command.Parameters.Add(new MySqlParameter("@adress", Adress));
-            command.Parameters.Add(new MySqlParameter("@phone", Phone));
-            command.Parameters.Add(new MySqlParameter("@mail", Mail));
-            command.Parameters.Add(new MySqlParameter("@role", Role));
+            MySqlCommand commandCheck = new MySqlCommand(requestCheck, connection);
+            commandCheck.Parameters.Add(new MySqlParameter("@login", Login));
             connection.Open();
-            command.ExecuteScalar();
+            bool check = Convert.ToBoolean(commandCheck.ExecuteScalar());
+            
+
+            try
+            {
+                command.Parameters.Add(new MySqlParameter("@login", Login));
+
+                //Hashage du mot de passe
+                byte[] salt;
+                new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
+                var pbkdf2 = new Rfc2898DeriveBytes(Password, salt, 100000);
+                byte[] hash = pbkdf2.GetBytes(20);
+                byte[] hashBytes = new byte[36];
+                Array.Copy(salt, 0, hashBytes, 0, 16);
+                Array.Copy(hash, 0, hashBytes, 16, 20);
+                string PasswordHash = Convert.ToBase64String(hashBytes);
+
+                command.Parameters.Add(new MySqlParameter("@password", PasswordHash));
+                command.Parameters.Add(new MySqlParameter("@lastName", LastName));
+                command.Parameters.Add(new MySqlParameter("@firstName", FirstName));
+                command.Parameters.Add(new MySqlParameter("@adress", Adress));
+                command.Parameters.Add(new MySqlParameter("@phone", Phone));
+                command.Parameters.Add(new MySqlParameter("@mail", Mail));
+                command.Parameters.Add(new MySqlParameter("@role", role.Id));
+                connection.Close();
+                connection.Open();
+                
+                // si Le login n'existe pas déja
+                if (!check)
+                {
+                    command.ExecuteScalar();
+                    user = new User()
+                    {
+                        Login = Login,
+                        Password = Password,
+                        role = role
+                    };
+                }
+            }
+            catch (ArgumentNullException)
+            {
+
+            }
+           
             command.Dispose();
             connection.Close();
+            
+            return user;
             
         }
 
@@ -137,7 +174,7 @@ namespace STIVE_GestionStock.Models
             return nb == 1;
         }
 
-        public void disconnection()
+        public void Logout()
         {
             //ISession.Clear();
         }

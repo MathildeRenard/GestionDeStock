@@ -34,6 +34,7 @@ namespace STIVE_GestionStock.Controllers
                 return RedirectToAction("Index", "Login", new { message = "Erreur de connexion" });
             }
         }
+        
        
     }
 }
