@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using System.Text;
 using System.Security.Cryptography;
+using Microsoft.AspNetCore.Session;
 
 namespace STIVE_GestionStock.Models
 {
@@ -192,9 +193,6 @@ namespace STIVE_GestionStock.Models
             return nb == 1;
         }
 
-        public void Logout()
-        {
-            //ISession.Clear();
-        }
+       
     }
 }

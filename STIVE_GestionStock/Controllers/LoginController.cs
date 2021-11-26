@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using STIVE_GestionStock.Services;
+using STIVE_GestionStock.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace STIVE_GestionStock.Controllers
 
         public IActionResult SubmitLogin(string login, string password)
         {
-           
+
             if (_login.LogIn(login, password))
             {
                 return RedirectToAction("Index", "Home");
@@ -34,7 +35,12 @@ namespace STIVE_GestionStock.Controllers
                 return RedirectToAction("Index", "Login", new { message = "Erreur de connexion" });
             }
         }
-        
-       
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index", "Home");
+        }
+
     }
 }
