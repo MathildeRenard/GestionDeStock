@@ -13,10 +13,22 @@ namespace STIVE_GestionStock.Models
 
         public Role()
         {
+           
         }
 
         public int Id { get => id; set => id = value; }
         public string Name { get => name; set => name = value; }
 
+        public void setName()
+        {
+            if (id == 1)
+            {
+                name = "admin";
+            }
+            else if (id == 2)
+            {
+                name = "client";
+            }
+        }
     }
 }

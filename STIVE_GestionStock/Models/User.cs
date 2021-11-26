@@ -59,8 +59,10 @@ namespace STIVE_GestionStock.Models
             {
                 String SavedPasswordHash = passwordHash["Password"].ToString();
                 //role à ajouter dans la classe role (pour l'instant cela crée une erreur)
-                //role.id = Convert.ToInt32(passwordHash["ID_Role"]);
-               
+
+                role.Id = Convert.ToInt32(passwordHash["ID_Role"]);
+                //Appeler la méthode de role qui initialise le nom du role.
+                role.setName();
                 //Vérifier si le mot de passe correspond à celui de la base de données
                 byte[] hashBytes = Convert.FromBase64String(SavedPasswordHash);
                 byte[] salt = new byte[16];
@@ -75,7 +77,7 @@ namespace STIVE_GestionStock.Models
                         {
                             Login = login,
                             Password = password,
-                            //role = role
+                            Role = role
                            
                         };
 
@@ -102,6 +104,8 @@ namespace STIVE_GestionStock.Models
             User user = null;
             //Mettre le role par defaut à 2(Client)
             role.Id = 2;
+            //Appeler la méthode de role qui initialise le nom du role.
+            role.setName();
             request = "INSERT INTO User ( Login, Password, LastName, FirstName, Adress, Phone, Mail,ID_Role) values (@login, @password, @lastName, @firstName, @adress, @phone, @mail,@role)";
             //requete pour éviter qu'il y ait deux fois le même login dans la base de données
             String requestCheck = "SELECT COUNT(*) from User WHERE Login = @login ";
@@ -149,7 +153,7 @@ namespace STIVE_GestionStock.Models
                         {
                             Login = Login,
                             Password = Password,
-                            //role = role
+                            Role = role
                         };
                     }
                     catch (MySqlException)
