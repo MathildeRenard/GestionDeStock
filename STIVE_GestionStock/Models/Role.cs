@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using MySql.Data.MySqlClient;
 namespace STIVE_GestionStock.Models
 {
     public class Role
@@ -10,6 +10,9 @@ namespace STIVE_GestionStock.Models
 
         private int id;
         private string name;
+        private static string request;
+        private static MySqlConnection connection;
+        private static MySqlCommand command;
 
         public Role()
         {
@@ -21,14 +24,14 @@ namespace STIVE_GestionStock.Models
 
         public void setName()
         {
-            if (id == 1)
-            {
-                name = "admin";
-            }
-            else if (id == 2)
-            {
-                name = "client";
-            }
+            request = "SELECT Name FROM Role WHERE id = @Id";
+            connection = Db.Connection;
+            command = new MySqlCommand(request, connection);
+            command.Parameters.Add(new MySqlParameter("Id", id));
+            connection.Open();
+            name = command.ExecuteScalar().ToString(); ;
+            command.Dispose();
+            connection.Close();
         }
     }
 }

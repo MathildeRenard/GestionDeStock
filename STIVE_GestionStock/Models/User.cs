@@ -58,10 +58,10 @@ namespace STIVE_GestionStock.Models
             try
             {
                 String SavedPasswordHash = passwordHash["Password"].ToString();
-                //role à ajouter dans la classe role (pour l'instant cela crée une erreur)
+                //role à ajouter dans la classe role
 
                 role.Id = Convert.ToInt32(passwordHash["ID_Role"]);
-                //Appeler la méthode de role qui initialise le nom du role.
+                //Appeler la méthode de la classe Role qui initialise le nom du role.
                 role.setName();
                 //Vérifier si le mot de passe correspond à celui de la base de données
                 byte[] hashBytes = Convert.FromBase64String(SavedPasswordHash);
@@ -104,7 +104,7 @@ namespace STIVE_GestionStock.Models
             User user = null;
             //Mettre le role par defaut à 2(Client)
             role.Id = 2;
-            //Appeler la méthode de role qui initialise le nom du role.
+            //Appeler la méthode de la classe Role qui initialise le nom du role.
             role.setName();
             request = "INSERT INTO User ( Login, Password, LastName, FirstName, Adress, Phone, Mail,ID_Role) values (@login, @password, @lastName, @firstName, @adress, @phone, @mail,@role)";
             //requete pour éviter qu'il y ait deux fois le même login dans la base de données
@@ -182,21 +182,6 @@ namespace STIVE_GestionStock.Models
             return user;
             
         }
-
-         //méthode de suppression inutilisée pour le moment mais sera gérable par l'admin.
-        public bool Delete()
-        {
-            request = "DELETE FROM User where id=@id";
-            connection = Db.Connection;
-            command = new MySqlCommand(request, connection);
-            command.Parameters.Add(new MySqlParameter("@id", Id));
-            connection.Open();
-            int nb = command.ExecuteNonQuery();
-            command.Dispose();
-            connection.Close();
-            return nb == 1;
-        }
-
        
     }
 }
