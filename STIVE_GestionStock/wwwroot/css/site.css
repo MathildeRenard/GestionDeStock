@@ -59,13 +59,29 @@ html {
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+    margin-top: 85px;
 }
+
 .footer {
   position: absolute;
   bottom: 0;
   width: 100%;
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
+}
+
+/*--------------------------------*/
+
+.dropdown-toggle::after {
+    display: none;
+}
+
+.text-decoration-none {
+    text-decoration: none !important;
+}
+/* Font Awesome Icons have variable width. Added fixed width to fix that.*/
+.icon-width {
+    width: 2rem;
 }

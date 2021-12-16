@@ -7,5 +7,6 @@ namespace STIVE_GestionStock.Models
 {
     public class Family
     {
+
     }
 }

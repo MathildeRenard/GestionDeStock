@@ -7,64 +7,62 @@
     <title>@ViewData["Title"] - STIVE_GestionStock</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link href="~/css/FontAwesome/all.css" rel="stylesheet"> <!--load all styles -->
+    <script defer src="~/js/FontAwesome/all.js"></script> <!--load all styles -->
+
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">STIVE_GestionStock</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li>
-                            @_login.GetLogin()
-                            @_login.GetRole()
-                        </li>
-                        @* @
-        {
-        if (@_login.isLogged() == true)
-            {*@
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Connection">Se connecter</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Register">S'inscrire</a>
-                        </li>
-                        @*}
-        else
-        {*@
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Logout">Se déconnecter</a>
+    <div class="container">
+        <header class="">
+            <nav class="navbar navbar-expand-lg navbar-light shadow-sm bg-light fixed-top">
+                <div class="container">
+                    <a class="navbar-brand d-flex align-items-center" href="#">
+                        <img class="bi me-2" height="50" src="/img/Logo DiVin.png" alt="DiVin">
+                    </a> <button class="navbar-toggler navbar-toggler-right border-0" type="button" data-toggle="collapse" data-target="#navbar4">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbar4">
+                        <ul class="navbar-nav mr-auto pl-lg-4">
+                            <li class="nav-item px-lg-2 active"> <a class="nav-link" href="#"> <span class="d-inline-block d-lg-none icon-width"><i class="fas fa-home"></i></span>Home</a> </li>
+                            <li class="nav-item px-lg-2"> <a class="nav-link" href="#"><span class="d-inline-block d-lg-none icon-width"><i class="fas fa-spa"></i></span>Services</a> </li>
+                            <li class="nav-item px-lg-2"> <a class="nav-link" href="#"><span class="d-inline-block d-lg-none icon-width"><i class="far fa-user"></i></span>About</a> </li>
+                            <li class="nav-item px-lg-2"> <a class="nav-link" href="#"><span class="d-inline-block d-lg-none icon-width"><i class="far fa-envelope"></i></span>Contact</a> </li>
+                        </ul>
+                        <ul class="navbar-nav ml-auto mt-3 mt-lg-0">
 
-                        </li>
-                        @*} }*@
-                    </ul>
-                   
+                            @* if connecté alors fa deconnection + Nom utilisateur sinon fa connexion *@
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Home" asp-action="Connection">
+                                    <i class="fas fa-sign-in-alt"></i><span class="d-lg-none ml-3">Se connecter</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Register">
+                                    <i class="fas fa-edit"></i><span class="d-lg-none ml-3">S'inscrire</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Connection">
+                                    <i class="fas fa-sign-out-alt"></i><span class="d-lg-none ml-3">Se déconnecter</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-
-            </div>
-
-        </nav>
-    </header>
+            </nav>
+        </header>
+    </div>
+    @*</header>*@
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
+
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2021 - STIVE_GestionStock - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2021 - STIVE - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
-
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
