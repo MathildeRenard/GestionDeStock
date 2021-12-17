@@ -47,7 +47,6 @@ namespace STIVE_GestionStock.Controllers
             ViewBag.Family = Family.GetFamilies();
             ViewBag.Warehouse = Warehouse.GetWarehouses();
             ViewBag.Product = Product.GetProduct(id);
-
             return View();
         }
 

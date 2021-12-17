@@ -12,7 +12,7 @@
         <thead>
             <tr>
                 <th scope="col">Photo</th>
-                <th scope="col">Nom</th>
+                <th scope="col">Nom du produit</th>
                 <th scope="col">Prix</th>
                 <th scope="col"></th>
             </tr>
@@ -21,10 +21,10 @@
             @foreach (Product p in Model)
             {
                 <tr>
-                    <td><img class="" src="@p.Url_photo"></td>
+                    <td><img class="" height="200" src="@p.Url_photo"></td>
                     <td>@p.Name</td>
-                    <td>@p.Unit_price</td>
-                    <td><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ShowProduct" asp-route-id="@p.Id">Voir le produit</a></td>
+                    <td>@p.Unit_price €</td>
+                    <td><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ShowProduct" asp-route-id="@p.Id"><i class="fas fa-eye"></i></a></td>
                 </tr>
             }
         </tbody>

@@ -22,7 +22,7 @@
         <thead>
             <tr>
                 <th scope="col">Photo</th>
-                <th scope="col">Nom</th>
+                <th scope="col">Nom du produit</th>
                 <th scope="col">Prix</th>
                 <th scope="col"></th>
             </tr>
@@ -31,9 +31,9 @@
             @foreach (Product p in Model)
             {
                 <tr>
-                    <td><img class="" src="@p.Url_photo"></td>
+                    <td><img class="" height="200" src="@p.Url_photo"></td>
                     <td>@p.Name</td>
-                    <td>@p.Unit_price</td>
+                    <td>@p.Unit_price €</td>
                     <td><span><a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="EditProduct" asp-route-id="@p.Id"><i class="fas fa-edit"></i></a><a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="DeleteProduct" asp-route-id="@p.Id"><i class="fas fa-minus-circle"></i></a></span></td>
                 </tr>
             }
