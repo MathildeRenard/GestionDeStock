@@ -48,5 +48,28 @@ namespace STIVE_GestionStock.Models
             connection.Close();
             return home;
         }
+        // Liste Home
+        public static List<Home> GetHomes()
+        {
+            List<Home> homes = new List<Home>();
+            request = "SELECT ID, Name FROM home";
+            connection = Db.Connection;
+            command = new MySqlCommand(request, connection);
+            connection.Open();
+            reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                Home home = new Home()
+                {
+                    Id_Home = reader.GetInt32(0),
+                    Name = reader.GetString(1),
+                };
+                homes.Add(home);
+            }
+            reader.Close();
+            command.Dispose();
+            connection.Close();
+            return homes;
+        }
     }
 }

@@ -1,0 +1,103 @@
+﻿<h1>Modification du produit</h1>
+
+<form asp-controller="Admin" asp-action="SubmitEditFormProduct" method="post">
+    <div>
+        <input class="form-control" type="text" name="id" hidden placeholder="id" value="@ViewBag.Product.Id" />
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <input class="form-control" type="text" name="name" placeholder="Nom" value="@ViewBag.Product.Name" />
+        </div>
+        <div class="col-6">
+            <input class="form-control" type="text" name="description" placeholder="Description" value="@ViewBag.Product.Description" />
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-4">
+            <input class="form-control" type="text" name="quantity" placeholder="Quantité" value="@ViewBag.Product.Quantity" />
+        </div>
+        <div class="col-4">
+            <input class="form-control" type="text" name="unit_price" placeholder="Prix" value="@ViewBag.Product.Unit_price"/>
+        </div>
+        <div class="col-4">
+            <input class="form-control" type="text" name="product_year" placeholder="Année de production" value="@ViewBag.Product.Product_year"/>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-6">
+            <input class="form-control" type="text" name="quantity_lot" placeholder="Quantité en lot" value="@ViewBag.Product.Quantity_lot"/>
+        </div>
+        <div class="col-6">
+            <input class="form-control" type="text" name="lot_price" placeholder="Prix en lot" value="@ViewBag.Product.Lot_price"/>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="form-check col-6">
+            <label class="form-check-label" for="gridCheck">Auto réapprovisionnement : </label>
+            <input class="form-check-input position-static" type="checkbox" id="blankCheckbox" name="auto_replenishment" value="@ViewBag.Product.Auto_replenishment">
+        </div>
+        <div class="col-6">
+            <input class="form-control" type="text" name="url_photo" placeholder="Photo" value="@ViewBag.Product.Url_photo"/>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-4">
+            <select class="form-control" name="id_Home" aria-label="Maison">
+                @foreach (Home h in ViewBag.Home)
+                {
+                    if (ViewBag.Product.Home.Id_Home == h.Id_Home)
+                    {
+                        <option selected value="@h.Id_Home">@h.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@h.Id_Home">@h.Name</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="col-4">
+            <select class="form-control" name="id_Family" aria-label="Famille">
+                @foreach (Family f in ViewBag.Family)
+                {
+                    if (ViewBag.Product.Family.Id_Family == f.Id_Family)
+                    {
+                        <option selected value="@f.Id_Family">@f.Name</option>
+
+                    }
+                    else
+                    {
+                        <option value="@f.Id_Family">@f.Name</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="col-4">
+            <select class="form-control" name="id_Warehouse" aria-label="Entrepot">
+                @foreach (Warehouse w in ViewBag.Warehouse)
+                {
+                    if (ViewBag.Product.Warehouse.Id_Warehouse == w.Id_Warehouse)
+                    {
+                        <option selected value="@w.Id_Warehouse">@w.Name</option>
+
+
+                    }
+                    else
+                    {
+                        <option value="@w.Id_Warehouse">@w.Name</option>
+                    }
+                }
+            </select>
+        </div>
+    </div>
+    <br />
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <button type="submit" class="btn btn-primary btn-block">Enregistrer</button>
+        </div>
+    </div>
+</form>

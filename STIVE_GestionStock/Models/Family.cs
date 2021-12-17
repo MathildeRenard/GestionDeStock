@@ -47,5 +47,30 @@ namespace STIVE_GestionStock.Models
             connection.Close();
             return family;
         }
+
+        // Liste Family
+        public static List<Family> GetFamilies()
+        {
+            List<Family> families = new List<Family>();
+            request = "SELECT ID, Name FROM family";
+            connection = Db.Connection;
+            command = new MySqlCommand(request, connection);
+            connection.Open();
+            reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                Family family = new Family()
+                {
+                    Id_Family = reader.GetInt32(0),
+                    Name = reader.GetString(1),
+                };
+                families.Add(family);
+            }
+            reader.Close();
+            command.Dispose();
+            connection.Close();
+            return families;
+        }
     }
 }
+

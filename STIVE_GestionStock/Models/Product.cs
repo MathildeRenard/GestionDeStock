@@ -50,7 +50,7 @@ namespace STIVE_GestionStock.Models
         // Insert Product
         public bool Save()
         {
-            request = "INSERT INTO product (ID, Name, Description, Quantity, Available, Product_year, Auto_replenishment, Unit_price, Lot_Price, Quantity_lot, URL_Photo, ID_Home, ID_Warehouse, ID_Family) values (@ID, @Name, @Description, @Quantity, @Available, @Product_year, @Auto_replenishment, @Unit_price, @Lot_Price, @Quantity_lot, @URL_Photo, @ID_Home, @ID_Warehouse, @ID_Family); SELECT LAST_INSERT_ID()";
+            request = "INSERT INTO product (Name, Description, Quantity, Available, Product_year, Auto_replenishment, Unit_price, Lot_Price, Quantity_lot, URL_Photo, ID_Home, ID_Warehouse, ID_Family) values (@Name, @Description, @Quantity, @Available, @Product_year, @auto_replenishment, @Unit_price, @Lot_Price, @Quantity_lot, @URL_Photo, @ID_Home, @ID_Warehouse, @ID_Family); SELECT LAST_INSERT_ID()";
             connection = Db.Connection;
             command = new MySqlCommand(request, connection);
             command.Parameters.Add(new MySqlParameter("@Name", Name));
@@ -58,7 +58,7 @@ namespace STIVE_GestionStock.Models
             command.Parameters.Add(new MySqlParameter("@Quantity", Quantity));
             command.Parameters.Add(new MySqlParameter("@Available", Available));
             command.Parameters.Add(new MySqlParameter("@Product_year", Product_year));
-            command.Parameters.Add(new MySqlParameter("@Auto_remplishment", Auto_replenishment));
+            command.Parameters.Add(new MySqlParameter("@auto_replenishment", Auto_replenishment));
             command.Parameters.Add(new MySqlParameter("@Unit_price", Unit_price));
             command.Parameters.Add(new MySqlParameter("@Lot_price", Lot_price));
             command.Parameters.Add(new MySqlParameter("@Quantity_lot", Quantity_lot));

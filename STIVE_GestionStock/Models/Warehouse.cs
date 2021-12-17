@@ -48,5 +48,30 @@ namespace STIVE_GestionStock.Models
             connection.Close();
             return warehouse;
         }
+
+        // Liste Warehouse
+        public static List<Warehouse> GetWarehouses()
+        {
+            List<Warehouse> warehouses = new List<Warehouse>();
+            request = "SELECT ID, Name, Adress FROM warehouse";
+            connection = Db.Connection;
+            command = new MySqlCommand(request, connection);
+            connection.Open();
+            reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                Warehouse warehouse = new Warehouse()
+                {
+                    Id_Warehouse = reader.GetInt32(0),
+                    Name = reader.GetString(1),
+                    Adress = reader.GetString(2),
+                };
+                warehouses.Add(warehouse);
+            }
+            reader.Close();
+            command.Dispose();
+            connection.Close();
+            return warehouses;
+        }
     }
 }
