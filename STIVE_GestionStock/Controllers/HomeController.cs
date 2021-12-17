@@ -39,5 +39,14 @@ namespace STIVE_GestionStock.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        //Redirections pour les boutons Se connecter et s'inscrire
+        public IActionResult Connection()
+        {
+            return View("/Views/Login/Index.cshtml");
+        }
+        public IActionResult Register()
+        {
+            return View("/Views/Register/Index.cshtml");
+        }
     }
 }
