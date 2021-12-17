@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "Produit";
+}
+@model Product
+
+<h1> Information sur le produit : </h1>
+
+<div class="col">
+    <img height="200" src="@Model.Url_photo">
+</div>
+<div class="col">
+    <p>Nom : @Model.Name </p>
+</div>
+<div class="col">
+    <p>Description : @Model.Description </p>
+</div>
+<div class="col">
+    <p>Famille : @Model.Family.Name </p>
+</div>
+<div class="col">
+    <p>Quantité : @Model.Quantity </p>
+</div>
+<div class="col">
+    <p>Disponnible : @Model.Available </p>
+</div>
+<div class="col">
+    <p>Année de production : @Model.Product_year </p>
+</div>
+<div class="col">
+    <p>Prix unitaire : @Model.Unit_price </p>
+</div>
+<div class="col">
+    <p>Quantié en lot : @Model.Quantity_lot </p>
+</div>
+<div class="col">
+    <p>Prix du lot : @Model.Lot_price</p>
+</div>
+<div class="col">
+    <p>Maison : @Model.Home.Name </p>
+</div>
