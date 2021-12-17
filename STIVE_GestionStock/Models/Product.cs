@@ -116,7 +116,7 @@ namespace STIVE_GestionStock.Models
         }
 
         // Get by id Product
-        public static Product GetProduct(string Id)
+        public static Product GetProduct(int Id)
         {
             Product product = null;
             request = "SELECT ID, Name, Description, Quantity, Available, Product_year, Auto_replenishment, Unit_price, Lot_Price, Quantity_lot, URL_Photo, ID_Home, ID_Warehouse, ID_Family FROM product where Id= @Id";
@@ -151,7 +151,7 @@ namespace STIVE_GestionStock.Models
             return product;
         }
 
-        public static List<Product> GetProduct()
+        public static List<Product> GetProducts()
         {
             List<Product> products = new List<Product>();
             request = "SELECT ID, Name, Description, Quantity, Available, Product_year, Auto_replenishment, Unit_price, Lot_Price, Quantity_lot, URL_Photo, ID_Home, ID_Warehouse, ID_Family FROM product";

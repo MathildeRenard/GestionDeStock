@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using STIVE_GestionStock.ViewModels;
 
 namespace STIVE_GestionStock.Controllers
 {
@@ -20,7 +21,12 @@ namespace STIVE_GestionStock.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return View(Product.GetProducts());
+        }
+
+        public IActionResult ShowProduct(int id)
+        {
+            return View(Product.GetProduct(id));
         }
 
         public IActionResult Privacy()
