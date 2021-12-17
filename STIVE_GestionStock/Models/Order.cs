@@ -18,6 +18,6 @@ namespace STIVE_GestionStock.Models
         public int Id { get => id; set => id = value; }
         public DateTime Date { get => date; set => date = value; }
         public User User { get => user; set => user = value; }
-        public List<ProductOrder> Productorderlist { get => productorderlist; set => productorderlist = value; }
+        //public List<ProductOrder> Productorderlist { get => productorderlist; set => productorderlist = value; }
     }
 }
