@@ -1,7 +1,7 @@
 ﻿<form asp-action="SubmitLogin" asp-controller="Login" method="post" class="container">
     @if (ViewBag.Message != null)
     {
-        <div class="row m-1 justify-content-center">
+        <div class="row m-1 justify-content-center position-absolute">
             <div class="alert alert-danger col-6 p-1">
                 @ViewBag.Message
             </div>
