@@ -1,0 +1,82 @@
+﻿<h1>Ajout de produit</h1>
+
+<form asp-controller="Admin" asp-action="SubmitAddFormProduct" method="post">
+    <div class="row">
+        <div class="col-4">
+            <input class="form-control" type="text" name="name" placeholder="Nom" />
+        </div>
+        <div class="col-4">
+            <input class="form-control" type="text" name="description" placeholder="Description" />
+        </div>
+        <div class="col-4">
+            <input class="form-control" type="text" name="product_year" placeholder="Année de production" />
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-6">
+            <input class="form-control" type="text" name="quantity" placeholder="Quantité" />
+        </div>
+        <div class="col-6">
+            <input class="form-control" type="text" name="unit_price" placeholder="Prix" />
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-6">
+            <input class="form-control" type="text" name="quantity_lot" placeholder="Quantité en lot" />
+        </div>
+        <div class="col-6">
+            <input class="form-control" type="text" name="lot_price" placeholder="Prix en lot" />
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-12">
+            <input class="form-control" type="text" name="url_photo" placeholder="Photo" />
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-4">
+            <label class="" for="home">Maison</label>
+            <select class="form-control" id="home" name="id_Home" aria-label="Maison">
+                @foreach (Home h in ViewBag.Home)
+                {
+                    <option value="@h.Id_Home">@h.Name</option>
+                }
+            </select>
+        </div>
+        <div class="col-4">
+            <label class="" for="family">Famille</label>
+            <select class="form-control" id="family" name="id_Family" aria-label="Famille">
+                @foreach (Family f in ViewBag.Family)
+                {
+                    <option value="@f.Id_Family">@f.Name</option>
+                }
+            </select>
+        </div>
+        <div class="col-4">
+            <label class="" for="warehouse">Entrepôt</label>
+            <select class="form-control" id="warehouse" name="id_Warehouse" aria-label="Entrepot">
+                @foreach (Warehouse w in ViewBag.Warehouse)
+                {
+                    <option value="@w.Id_Warehouse">@w.Name</option>
+                }
+            </select>
+        </div>
+    </div>
+    <br />
+    <div class="row justify-content-center">
+        <div class="form-check col-3">
+            <input class="form-check-input position-static" type="checkbox" id="gridCheck" name="auto_replenishment" value="true">
+            <label class="form-check-label" for="gridCheck">Auto réapprovisionnement</label>
+        </div>
+    </div>
+    <br />
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <button type="submit" class="btn btn-primary btn-block">Enregistrer</button>
+        </div>
+    </div>
+</form>

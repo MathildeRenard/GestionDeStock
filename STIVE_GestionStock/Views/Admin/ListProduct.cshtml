@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Produit";
+}
+
+@{
+}
+@model List<Product>
+
+<h1>Gestion des Produits</h1>
+
+<br />
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <input type="button" class="btn btn-primary btn-block" value="Ajouter un produit" onclick="location.href='@Url.Action("AddProduct", "Admin","0")'" />
+
+        </div>
+    </div>
+    <br />
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Photo</th>
+                <th scope="col">Nom du produit</th>
+                <th scope="col">Prix</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Product p in Model)
+            {
+                <tr>
+                    <td><img class="" height="200" src="@p.Url_photo"></td>
+                    <td>@p.Name</td>
+                    <td>@p.Unit_price €</td>
+                    <td><span><a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="EditProduct" asp-route-id="@p.Id"><i class="fas fa-edit"></i></a><a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="DeleteProduct" asp-route-id="@p.Id"><i class="fas fa-minus-circle"></i></a></span></td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+</div>
