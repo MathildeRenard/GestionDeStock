@@ -134,3 +134,4 @@ C:\Users\renar\Documents\GestionDeStock\STIVE_GestionStock\obj\Debug\net5.0\STIV
 C:\Users\renar\Documents\GestionDeStock\STIVE_GestionStock\obj\Debug\net5.0\STIVE_GestionStock.genruntimeconfig.cache
 C:\Users\renar\Documents\GestionDeStock\STIVE_GestionStock\obj\Debug\net5.0\Razor\Views\User\Index.cshtml.g.cs
 C:\Users\renar\Documents\GestionDeStock\STIVE_GestionStock\obj\Debug\net5.0\Razor\Views\User\Update.cshtml.g.cs
+C:\Users\renar\Documents\GestionDeStock\STIVE_GestionStock\obj\Debug\net5.0\Razor\Views\User\Add.cshtml.g.cs
