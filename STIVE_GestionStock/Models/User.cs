@@ -19,12 +19,12 @@ namespace STIVE_GestionStock.Models
         private string lastName;
         private string firstName;
         private string adress;
-        private string phone;
+        private Int32 phone;
         static private Role role = new Role();
         private static string request;
         private static MySqlConnection connection;
         private static MySqlCommand command;
-        
+
 
         public User()
         {
@@ -36,7 +36,7 @@ namespace STIVE_GestionStock.Models
         public string LastName { get => lastName; set => lastName = value; }
         public string FirstName { get => firstName; set => firstName = value; }
         public string Adress { get => adress; set => adress = value; }
-        public string Phone { get => phone; set => phone = value; }
+        public Int32 Phone { get => phone; set => phone = value; }
         public string Login { get => login; set => login = value; }
         public Role Role { get => role; set => role = value; }
 
@@ -49,11 +49,11 @@ namespace STIVE_GestionStock.Models
             connection = Db.Connection;
             command = new MySqlCommand(request, connection);
             command.Parameters.Add(new MySqlParameter("Login", login));
-            
+
             connection.Open();
-            MySqlDataReader passwordHash= command.ExecuteReader();
+            MySqlDataReader passwordHash = command.ExecuteReader();
             passwordHash.Read();
-   
+
             //S'il y a eu une erreur lors de la saisie du login, le résultat de la requête sql lèvera une exception
             try
             {
@@ -78,7 +78,7 @@ namespace STIVE_GestionStock.Models
                             Login = login,
                             Password = password,
                             Role = role
-                           
+
                         };
 
                     }
@@ -96,10 +96,10 @@ namespace STIVE_GestionStock.Models
             connection.Close();
 
             return user;
-            }
+        }
 
         //Creer un nouveau compte dans la base de données
-        public User Create(String Login,String Password,String LastName,String FirstName, String Adress, Int32 Phone, String Mail)
+        public User Create(String Login, String Password, String LastName, String FirstName, String Adress, Int32 Phone, String Mail)
         {
             User user = null;
             //Mettre le role par defaut à 2(Client)
@@ -115,7 +115,7 @@ namespace STIVE_GestionStock.Models
             commandCheck.Parameters.Add(new MySqlParameter("@login", Login));
             connection.Open();
             bool check = Convert.ToBoolean(commandCheck.ExecuteScalar());
-            
+
 
             try
             {
@@ -140,7 +140,7 @@ namespace STIVE_GestionStock.Models
                 command.Parameters.Add(new MySqlParameter("@role", role.Id));
                 connection.Close();
                 connection.Open();
-                
+
                 // si Le login n'existe pas déja
                 if (!check)
                 {
@@ -158,7 +158,7 @@ namespace STIVE_GestionStock.Models
                     }
                     catch (MySqlException)
                     {
-                       
+
                     }
                 }
                 /*Si le login existe déja on initialise le login en "erreur" afin de pouvoir 
@@ -175,13 +175,120 @@ namespace STIVE_GestionStock.Models
             {
 
             }
-           
+
             command.Dispose();
             connection.Close();
-            
+
             return user;
-            
+
         }
-       
+        //afficher la liste des employés en mode admin
+        public List<User> GetUsers()
+        {
+
+            List<User> users = new List<User>();
+            request = "SELECT User.ID, FirstName,LastName,phone,mail,user.ID_Role,role.Name,Adress,Login FROM user left join role on(role.ID= user.ID_Role);";
+
+            connection = Db.Connection;
+
+            command = new MySqlCommand(request, connection);
+
+            connection.Open();
+            MySqlDataReader reader = command.ExecuteReader();
+            Console.WriteLine(reader);
+            while (reader.Read())
+            {
+                User user = new User()
+                {
+                    Id = reader.GetInt32(0),
+                    FirstName = reader.GetString(1),
+                    LastName = reader.GetString(2),
+                    Phone = reader.GetInt32(3),
+                    Adress = reader.GetString(7),
+                    Mail = reader.GetString(4),
+                    Login = reader.GetString(8),
+                    Role = new Role()
+
+                    {
+
+                        Id = reader.GetInt32(5),
+                        Name = reader.GetString(6),
+                    },
+
+                };
+                users.Add(user);
+            }
+
+            reader.Close();
+            command.Dispose();
+            connection.Close();
+            return users;
+        }
+
+        //afficher un user selon son id
+        public User GetUser(int Id)
+        {
+
+
+            request = "SELECT User.ID, FirstName,LastName,phone,mail,user.ID_Role,role.Name,Adress,Login FROM user left join role on(role.ID= user.ID_Role) WHERE User.ID = @Id;";
+
+            connection = Db.Connection;
+            command = new MySqlCommand(request, connection);
+
+            connection.Open();
+            command.Parameters.Add(new MySqlParameter("@Id", Id));
+            MySqlDataReader reader = command.ExecuteReader();
+
+            reader.Read();
+            User user = new User()
+            {
+                Id = reader.GetInt32(0),
+                FirstName = reader.GetString(1),
+                LastName = reader.GetString(2),
+                Phone = reader.GetInt32(3),
+                Adress = reader.GetString(7),
+                Mail = reader.GetString(4),
+                Login = reader.GetString(8),
+                Role = new Role()
+
+                {
+
+                    Id = reader.GetInt32(5),
+                    Name = reader.GetString(6),
+                }
+
+
+
+            };
+
+
+            reader.Close();
+            command.Dispose();
+            connection.Close();
+            return user;
+        }
+
+        public void Update(int Id, string Login, string FirstName, string LastName, int Phone, string Adress, string Mail, string idRole)
+        {
+            request = "UPDATE user SET FirstName=@firstname,LastName=@lastname,phone=@phone,Adress=@adress,Login=@login,mail=@Mail,ID_Role=@id_role WHERE ID=@id ";
+            connection.Open();
+            command = new MySqlCommand(request, connection);
+            command.Parameters.Add(new MySqlParameter("@firstname", FirstName));
+            command.Parameters.Add(new MySqlParameter("@lastname", LastName));
+            command.Parameters.Add(new MySqlParameter("@phone", Phone));
+            command.Parameters.Add(new MySqlParameter("@adress", Adress));
+            command.Parameters.Add(new MySqlParameter("@login", Login));
+            command.Parameters.Add(new MySqlParameter("@mail", Mail));
+            command.Parameters.Add(new MySqlParameter("@id_role", idRole));
+            command.Parameters.Add(new MySqlParameter("@id", Id));
+
+
+
+            command.ExecuteScalar();
+
+
+            command.Dispose();
+            connection.Close();
+        }
     }
 }
