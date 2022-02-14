@@ -25,6 +25,55 @@ namespace STIVE_GestionStock.Models
         public string Adress { get => adress; set => adress = value; }
         public int Id_Warehouse { get => id_Warehouse; set => id_Warehouse = value; }
 
+
+        // Insert Warehouse
+        public bool Save()
+        {
+            request = "INSERT INTO warehouse (Name, Adress) values (@Name, @Adress); SELECT LAST_INSERT_ID()";
+            connection = Db.Connection;
+            command = new MySqlCommand(request, connection);
+            command.Parameters.Add(new MySqlParameter("@Name", Name));
+            command.Parameters.Add(new MySqlParameter("@Adress", Adress));
+
+            connection.Open();
+            Id_Warehouse = Convert.ToInt32(command.ExecuteScalar());
+            command.Dispose();
+            connection.Close();
+            return Id_Warehouse > 0;
+        }
+
+        //Update Warehouse
+        public bool Update()
+        {
+            request = "Update warehouse set Name=@Name, Adress=@Adress where id=@id";
+            connection = Db.Connection;
+            command = new MySqlCommand(request, connection);
+            command.Parameters.Add(new MySqlParameter("@id", Id_Warehouse));
+            command.Parameters.Add(new MySqlParameter("@Name", Name));
+            command.Parameters.Add(new MySqlParameter("@Adress", Adress));
+            connection.Open();
+            int nbRow = command.ExecuteNonQuery();
+            command.Dispose();
+            connection.Close();
+            return nbRow == 1;
+        }
+
+        // Delete Warehouse
+        public bool Delete()
+        {
+            request = "DELETE FROM warehouse where id=@id";
+            connection = Db.Connection;
+            command = new MySqlCommand(request, connection);
+            command.Parameters.Add(new MySqlParameter("@id", Id_Warehouse));
+            connection.Open();
+            int nb = command.ExecuteNonQuery();
+            command.Dispose();
+            connection.Close();
+            return nb == 1;
+        }
+
+
+
         // Get by id Warehouse
         public static Warehouse GetWarehouse(int id)
         {

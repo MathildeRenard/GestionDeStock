@@ -1,0 +1,19 @@
+﻿<h1>Modification de famille</h1>
+
+<form asp-controller="Admin" asp-action="SubmitEditFormFamily" method="post">
+    <div>
+        <input class="form-control" type="text" name="id" hidden placeholder="id" value="@ViewBag.Family.Id" />
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <label class="" for="name">Nom de la famille</label>
+            <input class="form-control" id="name" type="text" name="name" placeholder="Nom" value="@ViewBag.Family.Name" />
+        </div>
+    </div>
+    <br />
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <button type="submit" class="btn btn-primary btn-block">Enregistrer</button>
+        </div>
+    </div>
+</form>

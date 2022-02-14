@@ -24,6 +24,52 @@ namespace STIVE_GestionStock.Models
         public int Id_Family { get => id_Family; set => id_Family = value; }
         public string Name { get => name; set => name = value; }
 
+
+        // Insert Famille
+        public bool Save()
+        {
+            request = "INSERT INTO family (Name) values (@Name); SELECT LAST_INSERT_ID()";
+            connection = Db.Connection;
+            command = new MySqlCommand(request, connection);
+            command.Parameters.Add(new MySqlParameter("@Name", Name));
+
+            connection.Open();
+            Id_Family = Convert.ToInt32(command.ExecuteScalar());
+            command.Dispose();
+            connection.Close();
+            return Id_Family > 0;
+        }
+
+        //Update family
+        public bool Update()
+        {
+            request = "Update family set Name=@Name where id=@id";
+            connection = Db.Connection;
+            command = new MySqlCommand(request, connection);
+            command.Parameters.Add(new MySqlParameter("@id", Id_Family));
+            command.Parameters.Add(new MySqlParameter("@Name", Name));
+            connection.Open();
+            int nbRow = command.ExecuteNonQuery();
+            command.Dispose();
+            connection.Close();
+            return nbRow == 1;
+        }
+
+        // Delete family
+        public bool Delete()
+        {
+            request = "DELETE FROM family where id=@id";
+            connection = Db.Connection;
+            command = new MySqlCommand(request, connection);
+            command.Parameters.Add(new MySqlParameter("@id", Id_Family));
+            connection.Open();
+            int nb = command.ExecuteNonQuery();
+            command.Dispose();
+            connection.Close();
+            return nb == 1;
+        }
+
+
         // Get by id Family
         public static Family GetFamily(int id)
         {

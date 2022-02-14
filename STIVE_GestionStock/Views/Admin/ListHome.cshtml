@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Maison";
+}
+
+@{
+}
+@model List<Home>
+
+<h1>Gestion des Maisons</h1>
+
+<br />
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <input type="button" class="btn btn-primary btn-block" value="Ajouter une maison" onclick="location.href='@Url.Action("AddHome", "Admin","0")'" />
+
+        </div>
+    </div>
+    <br />
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Nom de la maison</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Home h in Model)
+            {
+                <tr>
+                    <td>@h.Name</td>
+                    <td><span><a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="EditHome" asp-route-id="@h.Id_Home"><i class="fas fa-edit"></i></a><a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="DeleteHome" asp-route-id="@h.Id_Home"><i class="fas fa-minus-circle"></i></a></span></td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+</div>

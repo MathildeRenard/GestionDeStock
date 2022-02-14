@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Fournisseur";
+}
+
+@{
+}
+@model List<Provider>
+
+<h1>Gestion des fournisseurs</h1>
+
+<br />
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <input type="button" class="btn btn-primary btn-block" value="Ajouter un fournisseur" onclick="location.href='@Url.Action("AddProvider", "Admin","0")'" />
+
+        </div>
+    </div>
+    <br />
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Nom du fournisseur</th>
+                <th scope="col">Adresse du fournisseur</th>
+                <th scope="col">Mail du fournisseur</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Provider p in Model)
+            {
+                <tr>
+                    <td>@p.Name</td>
+                    <td>@p.Adress</td>
+                    <td>@p.Mail</td>
+                    <td><span><a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="EditProvider" asp-route-id="@p.Id"><i class="fas fa-edit"></i></a><a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="DeleteProvider" asp-route-id="@p.Id"><i class="fas fa-minus-circle"></i></a></span></td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+</div>

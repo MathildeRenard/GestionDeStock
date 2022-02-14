@@ -1,0 +1,19 @@
+﻿<h1>Ajout d'entrepôt</h1>
+
+<form asp-controller="Admin" asp-action="SubmitAddFormWarehouse" method="post">
+    <div class="row">
+        <div class="col-4">
+            <input class="form-control" type="text" name="name" placeholder="Nom" />
+        </div>
+        <div class="col-4">
+            <input class="form-control" type="text" name="adress" placeholder="Adresse" />
+        </div>
+    </div>
+    <br />
+    <br />
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <button type="submit" class="btn btn-primary btn-block">Enregistrer</button>
+        </div>
+    </div>
+</form>
