@@ -268,15 +268,12 @@ namespace STIVE_GestionStock.Models
             return user;
         }
 
-        public void Update(int Id, string Login, string FirstName, string LastName, int Phone, string Adress, string Mail, string RoleName)
+        public void Update(int Id, string Login, string FirstName, string LastName, int Phone, string Adress, string Mail, int IdRole)
         {
             request = "UPDATE user SET FirstName=@firstname,LastName=@lastname,phone=@phone,Adress=@adress,Login=@login,mail=@Mail,ID_Role=@id_role WHERE ID=@id ";
             connection.Open();
-            int idRole = 1;
-            if (RoleName == "Client")
-            {
-                idRole = 2;
-            }
+           
+            
            
             command = new MySqlCommand(request, connection);
             command.Parameters.Add(new MySqlParameter("@firstname", FirstName));
@@ -285,7 +282,7 @@ namespace STIVE_GestionStock.Models
             command.Parameters.Add(new MySqlParameter("@adress", Adress));
             command.Parameters.Add(new MySqlParameter("@login", Login));
             command.Parameters.Add(new MySqlParameter("@mail", Mail));
-            command.Parameters.Add(new MySqlParameter("@id_role", idRole));
+            command.Parameters.Add(new MySqlParameter("@id_role", IdRole));
             command.Parameters.Add(new MySqlParameter("@id", Id));
 
 
@@ -296,16 +293,11 @@ namespace STIVE_GestionStock.Models
             command.Dispose();
             connection.Close();
         }
-        public void Add( string Login, string FirstName, string LastName, int Phone, string Adress, string Mail, string RoleName)
+        public void Add( string Login, string FirstName, string LastName, int Phone, string Adress, string Mail, int IdRole)
         {
             request = "INSERT INTO user (FirstName, LastName, phone,Adress,Login,mail,ID_Role) VALUES (@firstname,@lastname,@phone,@adress,@login,@Mail,@id_role) ";
             connection.Open();
-            int idRole = 1;
-            if (RoleName == "Client")
-            {
-                idRole = 2;
-            }
-           
+
             command = new MySqlCommand(request, connection);
             command.Parameters.Add(new MySqlParameter("@firstname", FirstName));
             command.Parameters.Add(new MySqlParameter("@lastname", LastName));
@@ -313,7 +305,7 @@ namespace STIVE_GestionStock.Models
             command.Parameters.Add(new MySqlParameter("@adress", Adress));
             command.Parameters.Add(new MySqlParameter("@login", Login));
             command.Parameters.Add(new MySqlParameter("@mail", Mail));
-            command.Parameters.Add(new MySqlParameter("@id_role", idRole));
+            command.Parameters.Add(new MySqlParameter("@id_role", IdRole));
 
             command.ExecuteScalar();
 

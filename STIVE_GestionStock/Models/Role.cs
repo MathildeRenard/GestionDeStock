@@ -33,5 +33,31 @@ namespace STIVE_GestionStock.Models
             command.Dispose();
             connection.Close();
         }
+        public List<Role> GetRoles()
+        {
+            List<Role> roles = new List<Role>();
+            request = "SELECT * FROM Role";
+            connection = Db.Connection;
+            command = new MySqlCommand(request, connection);
+
+            connection.Open();
+           
+            MySqlDataReader reader = command.ExecuteReader();
+
+            while(reader.Read()){
+                Role role = new Role()
+                {
+                    Id = reader.GetInt32(0),
+                    Name = reader.GetString(1),
+                }; 
+                roles.Add(role);
+            };
+
+
+            reader.Close();
+            command.Dispose();
+            connection.Close();
+            return roles;
+        }
     }
 }
