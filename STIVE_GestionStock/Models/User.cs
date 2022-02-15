@@ -268,14 +268,35 @@ namespace STIVE_GestionStock.Models
             return user;
         }
 
-        public void Update(int Id, string Login, string FirstName, string LastName, int Phone, string Adress, string Mail, int IdRole)
+        public void Update(int Id, string Login, string FirstName, string LastName, int Phone, string Adress, string Mail, int IdRole,string password)
         {
-            request = "UPDATE user SET FirstName=@firstname,LastName=@lastname,phone=@phone,Adress=@adress,Login=@login,mail=@Mail,ID_Role=@id_role WHERE ID=@id ";
             connection.Open();
+            //vérifier que le password n'est pas vide si l'utilisateur choisi de ne pas le modifier
+            if (password != null)
+            {
+                request = "UPDATE user SET FirstName=@firstname,LastName=@lastname,phone=@phone,Adress=@adress,Login=@login,mail=@Mail,ID_Role=@id_role,Password=@password WHERE ID=@id ";
+                //Hashage du mot de passe
+                byte[] salt;
+                new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
+                var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 100000);
+                byte[] hash = pbkdf2.GetBytes(20);
+                byte[] hashBytes = new byte[36];
+                Array.Copy(salt, 0, hashBytes, 0, 16);
+                Array.Copy(hash, 0, hashBytes, 16, 20);
+                string PasswordHash = Convert.ToBase64String(hashBytes);
+
+                command = new MySqlCommand(request, connection);
+                command.Parameters.Add(new MySqlParameter("@password", PasswordHash));
+            }
+            else {
+                request = "UPDATE user SET FirstName=@firstname,LastName=@lastname,phone=@phone,Adress=@adress,Login=@login,mail=@Mail,ID_Role=@id_role WHERE ID=@id ";
+                command = new MySqlCommand(request, connection);
+            }
+         
            
             
            
-            command = new MySqlCommand(request, connection);
+            
             command.Parameters.Add(new MySqlParameter("@firstname", FirstName));
             command.Parameters.Add(new MySqlParameter("@lastname", LastName));
             command.Parameters.Add(new MySqlParameter("@phone", Phone));
@@ -285,6 +306,7 @@ namespace STIVE_GestionStock.Models
             command.Parameters.Add(new MySqlParameter("@id_role", IdRole));
             command.Parameters.Add(new MySqlParameter("@id", Id));
 
+        
 
 
             command.ExecuteScalar();
@@ -293,9 +315,9 @@ namespace STIVE_GestionStock.Models
             command.Dispose();
             connection.Close();
         }
-        public void Add( string Login, string FirstName, string LastName, int Phone, string Adress, string Mail, int IdRole)
+        public void Add( string Login, string FirstName, string LastName, int Phone, string Adress, string Mail, int IdRole,string password)
         {
-            request = "INSERT INTO user (FirstName, LastName, phone,Adress,Login,mail,ID_Role) VALUES (@firstname,@lastname,@phone,@adress,@login,@Mail,@id_role) ";
+            request = "INSERT INTO user (FirstName, LastName, phone,Adress,Login,mail,ID_Role,Password) VALUES (@firstname,@lastname,@phone,@adress,@login,@Mail,@id_role,@password) ";
             connection.Open();
 
             command = new MySqlCommand(request, connection);
@@ -306,6 +328,18 @@ namespace STIVE_GestionStock.Models
             command.Parameters.Add(new MySqlParameter("@login", Login));
             command.Parameters.Add(new MySqlParameter("@mail", Mail));
             command.Parameters.Add(new MySqlParameter("@id_role", IdRole));
+
+            //Hashage du mot de passe
+            byte[] salt;
+            new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
+            var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 100000);
+            byte[] hash = pbkdf2.GetBytes(20);
+            byte[] hashBytes = new byte[36];
+            Array.Copy(salt, 0, hashBytes, 0, 16);
+            Array.Copy(hash, 0, hashBytes, 16, 20);
+            string PasswordHash = Convert.ToBase64String(hashBytes);
+
+            command.Parameters.Add(new MySqlParameter("@password", PasswordHash));
 
             command.ExecuteScalar();
 
