@@ -1,6 +1,10 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "OK0mKWrsxOEeZbqNLpXTFL6zi9I0wbxXdPswnS312iZq0OgWcNg2GZVgM/TiY63z7C4w+S65knK2T9rx62cWAA==",
+=======
+  "dgSpecHash": "+XGHQpq31+naW9LFwBcygI4754y05rVkX9dvFVtF5bau4owVxCMjXNNK2oeGySuIzskoVSjffswFqFqg6qPC0g==",
+>>>>>>> 1b5b408b5bf76ad1a1cf2ec0a4235de8d0f31b27
   "success": true,
   "projectFilePath": "C:\\Users\\yuuma\\Desktop\\Projet CUBE 4 Gestion Stock\\GestionDeStock\\STIVE_GestionStock\\STIVE_GestionStock.csproj",
   "expectedPackageFiles": [

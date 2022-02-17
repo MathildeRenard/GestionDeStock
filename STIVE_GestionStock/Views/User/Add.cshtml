@@ -1,0 +1,74 @@
+﻿@model List<Role>
+
+<form class="container" asp-controller="User" asp-action="MakeAdd" method="post">
+
+
+    <input type="hidden" name="Id" />
+
+    <div class="row m-1 justify-content-center flex-column form-group">
+        <label>Nom d'utilisateur</label>
+        <input required="required" type="text" class="form-control w-75" name="Login" placeholder="Nom d'utilisateur" class="form-control col-6 p-1" />
+
+    </div>
+
+    <div class="row m-1 justify-content-center flex-column form-group">
+        <label>Prenom</label>
+        <input required="required" type="text" class="form-control w-75" name="FirstName" placeholder="Prenom" class="form-control col-6 p-1" />
+
+    </div>
+    <div class="row m-1 justify-content-center flex-column form-group">
+        <label>Nom</label>
+        <input required="required" type="text" class="form-control w-75" name="LastName" placeholder="Nom" class="form-control col-6 p-1" />
+
+    </div>
+    <div class="row m-1 justify-content-center flex-column form-group">
+        <label>Numéro de téléphonne fixe</label>
+        <input required="required" pattern="^[0-9]{10}$" title="Format du numéro incorrect" type="text" class="form-control w-75" name="Phone" placeholder="Numéro de téléphone" class="form-control col-6 p-1" />
+
+    </div>
+    <div class="row m-1 justify-content-center flex-column form-group">
+        <label>Adresse e-mail</label>
+        <input required="required" type="email" class="form-control w-75" name="Mail" placeholder="Adresse e-mail" class="form-control col-6 p-1" />
+
+    </div>
+    <div class="row m-1 justify-content-center flex-column form-group">
+        <label>Adresse</label>
+        <input required="required" type="text" class="form-control w-75" name="Adress" placeholder="Adresse" class="form-control col-6 p-1"/>
+
+    </div>
+
+
+
+    <div class="row m-1 justify-content-center flex-column form-group">
+
+        <label>Role</label>
+        <input type="hidden" id="choice" name="IdRole" />
+        <select required class="form-control w-75" onchange="changeValue(this.value)" ;>
+            <option selected value=""></option>
+
+            @foreach (Role r in Model)
+            {
+
+                <option value="@r.Id">@r.Name</option>
+
+            }
+        </select>
+    </div>
+    <div class="row m-1 justify-content-center flex-column form-group">
+        <label>Mot de passe</label>
+        <input required="required" type="password" class="form-control w-75" name="password" placeholder="mot de passe" class="form-control col-6 p-1" />
+        
+    </div>
+
+    <div class="row m-1 justify-content-center">
+        <button class="col-6 btn btn-default p-1" type="submit">Valider</button>
+    </div>
+
+</form>
+<script type="text/javascript">
+    function changeValue(id) {
+
+        document.getElementById("choice").value = id;
+
+    }
+</script>
