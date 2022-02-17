@@ -166,3 +166,6 @@ CREATE TABLE ProductOrderForm(
 	,CONSTRAINT ProductOrderForm_OrderForm0_FK FOREIGN KEY (ID_OrderForm) REFERENCES OrderForm(ID)
 )ENGINE=InnoDB;
 
+#-----------------------------------------------------------
+
+ALTER TABLE `order` ADD `OrderConfirm` BOOLEAN NOT NULL DEFAULT FALSE AFTER `Total`;
