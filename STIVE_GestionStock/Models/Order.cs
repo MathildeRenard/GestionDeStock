@@ -104,7 +104,7 @@ namespace STIVE_GestionStock.Models
                     Date = reader.GetDateTime(1),
                     Total = reader.GetDecimal(2),
                     ConfirmOrder = reader.GetBoolean(3),
-                    User = User.getUser(reader.GetInt32(4))
+                    User = User.GetUser(reader.GetInt32(4))
                 };
                 orders.Add(order);
             }
@@ -133,7 +133,7 @@ namespace STIVE_GestionStock.Models
                     Date = reader.GetDateTime(1),
                     Total = reader.GetDecimal(2),
                     ConfirmOrder = reader.GetBoolean(3),
-                    User = User.getUser(reader.GetInt32(4))
+                    User = User.GetUser(reader.GetInt32(4))
                 };
             }
             reader.Close();
