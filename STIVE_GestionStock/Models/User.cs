@@ -226,7 +226,7 @@ namespace STIVE_GestionStock.Models
         }
 
         //afficher un user selon son id
-        public static User GetUser(int Id)
+        public User GetUser(int Id)
         {
 
 

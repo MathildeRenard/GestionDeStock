@@ -98,6 +98,7 @@ namespace STIVE_GestionStock.Models
             reader = command.ExecuteReader();
             while (reader.Read())
             {
+                User user = new User();
                 Order order = new Order()
                 {
                     Id = reader.GetInt32(0),
