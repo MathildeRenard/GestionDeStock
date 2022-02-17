@@ -1,0 +1,45 @@
+﻿@model List<User>
+
+
+
+    <div id="listeUsers"></div>
+    <ul class="list-group list-group-flush my-5" style=" width: 50%; top: 100px; position: inherit;">
+
+        @foreach (User u in @Model)
+        {
+            <div class="site">
+                <form id="form @u.Id" class="container" action="" method="post">
+            <li id="@u.Id" class="list-group-item" style="display:flex;">
+                <ul>
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">@u.Login</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">@u.FirstName @u.LastName</h6>
+                            <p class="card-text">@u.Phone</p>
+                            <p class="card-text">@u.Adress</p>
+                            <p class="card-text">@u.Mail</p>
+                            <p class="card-text" id="@u.Role.Name">@u.Role.Name</p>
+                            <input type="hidden" class="form-control w-25" name="id" value="@u.Id">
+                            <button type="button" class="btn btn-outline-dark" onclick="Update(@u.Id,'Update')">Modifier</button>
+                            <button type="button" class="btn btn-outline-dark" onclick="Update(@u.Id,'Delete')">Supprimer</button>
+                        </div>
+                    </div>
+                </ul>
+            </li>
+            </form>
+            </div>
+        }
+
+    </ul>
+        <a asp-controller="User" asp-action="Add"><button type="button" class="btn btn-outline-dark">Ajouter</button></a>
+
+    <script>
+  
+        function Update(id, methode) {
+            var form = document.getElementById('form ' + id);
+
+            form.action = '/User/' + methode;
+            form.submit();
+
+        }
+    </script>
