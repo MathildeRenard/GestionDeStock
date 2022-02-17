@@ -98,14 +98,13 @@ namespace STIVE_GestionStock.Models
             reader = command.ExecuteReader();
             while (reader.Read())
             {
-                User user = new User();
                 Order order = new Order()
                 {
                     Id = reader.GetInt32(0),
                     Date = reader.GetDateTime(1),
                     Total = reader.GetDecimal(2),
                     ConfirmOrder = reader.GetBoolean(3),
-                    User = User.GetUser(reader.GetInt32(4))
+                    User = new User().GetUser(reader.GetInt32(4))
                 };
                 orders.Add(order);
             }
@@ -134,7 +133,7 @@ namespace STIVE_GestionStock.Models
                     Date = reader.GetDateTime(1),
                     Total = reader.GetDecimal(2),
                     ConfirmOrder = reader.GetBoolean(3),
-                    User = User.GetUser(reader.GetInt32(4))
+                    User = new User().GetUser(reader.GetInt32(4))
                 };
             }
             reader.Close();
