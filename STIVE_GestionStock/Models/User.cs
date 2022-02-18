@@ -45,12 +45,13 @@ namespace STIVE_GestionStock.Models
         {
             User user = null;
             //Faire un select si le mot de passe et le login correspondent à ceux dans la base de données.
-            request = "SELECT Password,User.ID_Role FROM User WHERE Login = @Login";
+            request = "SELECT ID,Password,User.ID_Role FROM User WHERE Login = @Login";
             connection = Db.Connection;
             command = new MySqlCommand(request, connection);
             command.Parameters.Add(new MySqlParameter("Login", login));
 
             connection.Open();
+
             MySqlDataReader passwordHash = command.ExecuteReader();
             passwordHash.Read();
 
@@ -75,6 +76,7 @@ namespace STIVE_GestionStock.Models
                     {
                         user = new User()
                         {
+                            Id = passwordHash.GetInt32(0),
                             Login = login,
                             Password = password,
                             Role = role
