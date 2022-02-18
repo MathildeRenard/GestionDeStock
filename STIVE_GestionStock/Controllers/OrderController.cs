@@ -46,6 +46,9 @@ namespace STIVE_GestionStock.Controllers
                     if ( p.Product.Id == idProduct)
                     {
                         bAdd = false;
+                        p.Quantity = p.Quantity + Qte;
+                        p.Total = p.Total + (Qte * p.Product.Unit_price);
+                        p.Update();
                     }
                 }
                 
