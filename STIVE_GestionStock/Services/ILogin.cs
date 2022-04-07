@@ -10,7 +10,7 @@ namespace STIVE_GestionStock.Services
     {
         bool isLogged();
         string GetLogin();
-
+        int GetIdLogin();
         string GetRole();
         bool LogIn(string login, string password);
     }
