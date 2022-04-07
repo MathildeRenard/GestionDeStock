@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Famille";
+}
+
+@{
+}
+@model List<Family>
+
+<h1>Gestion des Familles</h1>
+
+<br />
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <input type="button" class="btn btn-primary btn-block" value="Ajouter une famille" onclick="location.href='@Url.Action("AddFamily", "Admin","0")'" />
+
+        </div>
+    </div>
+    <br />
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Nom de la famille</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Family f in Model)
+            {
+                <tr>
+                    <td>@f.Name</td>
+                    <td><span><a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="EditFamily" asp-route-id="@f.Id_Family"><i class="fas fa-edit"></i></a><a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="DeleteFamily" asp-route-id="@f.Id_Family"><i class="fas fa-minus-circle"></i></a></span></td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+</div>

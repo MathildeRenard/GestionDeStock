@@ -1,0 +1,41 @@
+﻿@{
+    ViewData["Title"] = "Entrepôt";
+}
+
+@{
+}
+@model List<Warehouse>
+
+<h1>Gestion des entrepôts</h1>
+
+<br />
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <input type="button" class="btn btn-primary btn-block" value="Ajouter un entrepôt" onclick="location.href='@Url.Action("AddWarehouse", "Admin","0")'" />
+
+        </div>
+    </div>
+    <br />
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Nom de l'entrepôt</th>
+                <th scope="col">Adresse de l'entrepôt</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Warehouse w in Model)
+            {
+                <tr>
+                    <td>@w.Name</td>
+                    <td>@w.Adress</td>
+                    <td><span><a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="EditWarehouse" asp-route-id="@w.Id_Warehouse"><i class="fas fa-edit"></i></a><a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="DeleteWarehouse" asp-route-id="@w.Id_Warehouse"><i class="fas fa-minus-circle"></i></a></span></td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+</div>
