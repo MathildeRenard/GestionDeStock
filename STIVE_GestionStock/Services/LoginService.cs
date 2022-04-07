@@ -18,6 +18,10 @@ namespace STIVE_GestionStock.Services
         public string GetLogin()
         {
             return _accessor.HttpContext.Session.GetString("login");
+        }        
+        public int GetIdLogin()
+        {
+            return Convert.ToInt32(_accessor.HttpContext.Session.GetInt32("idLogin"));
         }
 
         public string GetRole()
@@ -37,6 +41,7 @@ namespace STIVE_GestionStock.Services
             if (u != null)
             {
                 _accessor.HttpContext.Session.SetString("login", u.Login);
+                _accessor.HttpContext.Session.SetInt32("idLogin", u.Id);
                 _accessor.HttpContext.Session.SetString("role", u.Role.Name);
                 _accessor.HttpContext.Session.SetString("isLogged", "true");
                 return true;

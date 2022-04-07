@@ -13,7 +13,7 @@ namespace STIVE_GestionStock.Models
         private decimal total;
         private bool confirmOrder;
         private User user;
-        //private List<ProductOrder> productorderlist;
+        private List<ProductOrder> productorderlist;
 
         private static string request;
         private static MySqlCommand command;
@@ -32,12 +32,12 @@ namespace STIVE_GestionStock.Models
 
         public User User { get => user; set => user = value; }
 
-        //public List<ProductOrder> Productorderlist { get => productorderlist; set => productorderlist = value; }
+        public List<ProductOrder> Productorderlist { get => productorderlist; set => productorderlist = value; }
 
         // Add Order
         public bool Save()
         {
-            request = "INSERT INTO Order (Date, Total, ConfirmOrder, ID_User ) values (@date, @total, @confirmOrder, @idUser); SELECT LAST_INSERT_ID()";
+            request = "INSERT INTO `order` (Date, Total, ConfirmOrder, ID_User ) values (@date, @total, @confirmOrder, @idUser); SELECT LAST_INSERT_ID()";
             connection = Db.Connection;
             command = new MySqlCommand(request, connection);
             command.Parameters.Add(new MySqlParameter("@date", Date));
@@ -54,7 +54,7 @@ namespace STIVE_GestionStock.Models
         //Update Order
         public bool Update()
         {
-            request = "Update Order set Date=@date, Total=@total, ConfirmOrder=@confirmOrder, ID_User=@idUser where ID=@id";
+            request = "Update `order` set Date=@date, Total=@total, ConfirmOrder=@confirmOrder, ID_User=@idUser where ID=@id";
             connection = Db.Connection;
             command = new MySqlCommand(request, connection);
             command.Parameters.Add(new MySqlParameter("@id", Id));
@@ -72,7 +72,7 @@ namespace STIVE_GestionStock.Models
         //Delete Order
         public bool Delete()
         {
-            request = "DELETE FROM Order where ID=@id";
+            request = "DELETE FROM `order` where ID=@id";
             connection = Db.Connection;
             command = new MySqlCommand(request, connection);
             command.Parameters.Add(new MySqlParameter("@id", Id));
@@ -87,7 +87,7 @@ namespace STIVE_GestionStock.Models
         public static List<Order> GetOrders(string condition = "")
         {
             List<Order> orders = new List<Order>();
-            request = "SELECT ID, Date, Total, ConfirmOrder, ID_User FROM Order";
+            request = "SELECT ID, Date, Total, ConfirmOrder, ID_User FROM `order`";
             if (condition != "")
             {
                 request += " WHERE " + condition;
@@ -119,7 +119,38 @@ namespace STIVE_GestionStock.Models
         public static Order GetOrder(int id)
         {
             Order order = null;
-            request = "SELECT ID, Date, Total, ConfirmOrder, ID_User FROM Order where ID = @id";
+            request = "SELECT ID, Date, Total, ConfirmOrder, ID_User FROM `order` where ID = @id";
+            connection = Db.Connection;
+            command = new MySqlCommand(request, connection);
+            command.Parameters.Add(new MySqlParameter("id", id));
+            connection.Open();
+            reader = command.ExecuteReader();
+            if (reader.Read())
+            {
+                order = new Order()
+                {
+                    Id = reader.GetInt32(0),
+                    Date = reader.GetDateTime(1),
+                    Total = reader.GetDecimal(2),
+                    ConfirmOrder = reader.GetBoolean(3),
+                    User = new User().GetUser(reader.GetInt32(4))
+                };
+            }
+            reader.Close();
+            command.Dispose();
+            connection.Close();
+            return order;
+        }        
+        
+        // Get by id User
+        public static Order GetOrderByIdUser(int id, string condition = "")
+        {
+            Order order = null;
+            request = "SELECT ID, Date, Total, ConfirmOrder, ID_User FROM `order` where ID_user = @id AND ConfirmOrder = false";
+            if (condition != "")
+            {
+                request += " WHERE " + condition;
+            };
             connection = Db.Connection;
             command = new MySqlCommand(request, connection);
             command.Parameters.Add(new MySqlParameter("id", id));
