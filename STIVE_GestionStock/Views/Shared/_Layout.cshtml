@@ -51,10 +51,13 @@
                                 }
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Register">
-                                    <i class="fas fa-edit"></i><span class="d-lg-none ml-3">S'inscrire</span>
-                                </a>
-                            </li>
+                                @if (@_login.isLogged() == false)
+                                {
+                                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Register">
+                                        <i class="fas fa-edit"></i><span class="d-lg-none ml-3">S'inscrire</span>
+                                    </a>
+                                }
+                                </li>
                             <li class="nav-item">
                                 @if (@_login.isLogged())
                                 {
