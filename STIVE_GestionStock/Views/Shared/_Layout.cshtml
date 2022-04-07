@@ -31,6 +31,14 @@
                                     </a>
                                 }
                             </li>
+                            <li class="nav-item px-lg-2">
+                                @if (@_login.isLogged())
+                                {
+                                    <a class="nav-link" asp-area="" asp-controller="OrderForm" asp-action="Index">
+                                        <span class="d-inline-block d-lg-none icon-width"><i class="far fa-envelope"></i></span>Bon de commande
+                                    </a>
+                                }
+                            </li>
                         </ul>
                         <ul class="navbar-nav ml-auto mt-3 mt-lg-0">
                             <li class="nav-item">

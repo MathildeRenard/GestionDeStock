@@ -1,0 +1,50 @@
+﻿@{
+    ViewData["Title"] = "Bon de commande";
+}
+
+@{
+}
+@model List<Product>
+@inject ILogin _login
+
+<br />
+
+<h1>Bon de commande n° @ViewBag.OrderForm.Id</h1>
+
+<br />
+
+<div class="container">
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Photo</th>
+                <th scope="col">Nom du produit</th>
+                <th scope="col">Quantité</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (ProductOrderForm p in ViewBag.OrderForm.Productorderformlist)
+            {
+                <tr>
+                    <td><img class="" height="200" src="@p.Product.Url_photo"></td>
+                    <td>@p.Product.Name</td>
+                    <td>@p.Quantity</td>
+                    <td><a class="nav-link text-dark" asp-area="" asp-controller="OrderForm" asp-action="DeleteProductOrderForm" asp-route-id="@p.Id"><i class="fas fa-minus-circle"></i></a></td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+
+    <br />
+
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <input type="button" class="btn btn-primary btn-block" value="Commander" onclick="#" />
+
+        </div>
+    </div>
+</div>

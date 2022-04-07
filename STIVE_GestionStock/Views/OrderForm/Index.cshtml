@@ -1,0 +1,33 @@
+﻿@{
+    ViewData["Title"] = "Bon de commande";
+}
+
+@{
+}
+
+@inject ILogin _login
+
+<br />
+
+<div class="container">
+    <form asp-controller="OrderForm" asp-action="SubmitOrderForm" method="post">
+        <div class="row justify-content-center">
+            <div class="col-6">
+                <label class="" for="provider">Fournisseur</label>
+                <select class="form-control" id="provider" name="Id" aria-label="Fournisseur">
+                    @foreach (Provider p in ViewBag.Provider)
+                    {
+                        <option value="@p.Id">@p.Name</option>
+                    }
+                </select>
+            </div>
+
+        </div>
+        <br />
+        <div class="row justify-content-center">
+            <div class="col-6">
+                <button type="submit" class="btn btn-primary btn-block">Créer le bon de commande</button>
+            </div>
+        </div>
+    </form>
+</div>

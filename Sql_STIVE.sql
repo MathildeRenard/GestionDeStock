@@ -168,4 +168,18 @@ CREATE TABLE ProductOrderForm(
 
 #-----------------------------------------------------------
 
-ALTER TABLE `order` ADD `OrderConfirm` BOOLEAN NOT NULL DEFAULT FALSE AFTER `Total`;
+ALTER TABLE `order` ADD `ConfirmOrder` BOOLEAN NOT NULL DEFAULT FALSE AFTER `Total`;
+
+ALTER TABLE `orderform` ADD `ConfirmOrder` BOOLEAN NOT NULL DEFAULT FALSE AFTER `date`;
+
+ALTER TABLE stive.orderform DROP FOREIGN KEY OrderForm_Warehouse_FK;
+
+ALTER TABLE `orderform` DROP `ID_Warehouse`;
+
+ALTER TABLE `product` ADD `ID_Provider` INT NOT NULL AFTER `ID_Family`;
+
+ALTER TABLE `product` ADD CONSTRAINT `Product_Provider2_FK` FOREIGN KEY (`ID_Provider`) REFERENCES `provider`(`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+INSERT INTO `product` (`ID`, `Name`, `Description`, `Quantity`, `Available`, `Product_year`, `Auto_replenishment`, `Unit_price`, `Lot_Price`, `Quantity_lot`, `URL_Photo`, `ID_Home`, `ID_Warehouse`, `ID_Family`, `ID_Provider`) VALUES
+(2, 'Vin de Lille', 'Vin de Lille', 400, b'0', 1997, b'1', '300', '500', 15, 'http://cdn.shopify.com/s/files/1/1860/3211/products/chateau_des_karantes_rouge_9f0d88e8-aa2f-4456-a589-1f5873ef498c_1200x.jpg?v=1590151533', 1, 1, 1, 1),
+(3, 'Vin', 'Vin', 12, b'0', 1997, b'1', '22', '222', 12, 'http://cdn.shopify.com/s/files/1/1860/3211/products/chateau_des_karantes_rouge_9f0d88e8-aa2f-4456-a589-1f5873ef498c_1200x.jpg?v=1590151533', 1, 1, 1, 1);
