@@ -12,3 +12,21 @@ $(document).ready(function () {
         });
     }
 });
+
+//fonction barre de recherche du catalogue des vins
+function search() {
+    let input = document.getElementById('searchbar').value
+    input = input.toLowerCase();
+    let table = document.getElementsByClassName('info');
+
+   
+
+    for (i = 0; i < table.length; i++) {
+        if (!table[i].innerHTML.toLowerCase().includes(input)) {
+            table[i].style.display = "none";
+        }
+        else {
+            table[i].style.display = "block";
+        }
+    }
+}
