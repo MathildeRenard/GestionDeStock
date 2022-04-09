@@ -139,7 +139,7 @@ CREATE TABLE OrderForm(
 #------------------------------------------------------------
 
 CREATE TABLE ProductOrder(
-        ID          Int NOT NULL ,
+        ID          Int Auto_increment NOT NULL ,
         ID_Order    Int NOT NULL ,
         ID_Product  Int NOT NULL ,
         Quantity    Int NOT NULL,
@@ -156,7 +156,7 @@ CREATE TABLE ProductOrder(
 #------------------------------------------------------------
 
 CREATE TABLE ProductOrderForm(
-        ID                 Int NOT NULL ,
+        ID                 Int Auto_increment NOT NULL ,
         ID_OrderForm       Int NOT NULL ,
         ID_Product         Int NOT NULL ,
         Quantity           Int NOT NULL

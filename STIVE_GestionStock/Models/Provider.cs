@@ -103,10 +103,14 @@ namespace STIVE_GestionStock.Models
         }
 
         // Liste Providers
-        public static List<Provider> GetProviders()
+        public static List<Provider> GetProviders(string condition = "")
         {
             List<Provider> providers = new List<Provider>();
             request = "SELECT ID, Name, Adress, mail FROM provider";
+            if (condition != "")
+            {
+                request += " WHERE " + condition;
+            };
             connection = Db.Connection;
             command = new MySqlCommand(request, connection);
             connection.Open();

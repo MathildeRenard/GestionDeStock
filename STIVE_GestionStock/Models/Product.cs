@@ -23,6 +23,8 @@ namespace STIVE_GestionStock.Models
         private Warehouse warehouse;
         private Family family;
 
+        private int quantity_OrderForm;
+
         private static string request;
         private static MySqlCommand command;
         private static MySqlConnection connection;
@@ -46,6 +48,7 @@ namespace STIVE_GestionStock.Models
         public Home Home { get => home; set => home = value; }
         public Warehouse Warehouse { get => warehouse; set => warehouse = value; }
         public Family Family { get => family; set => family = value; }
+        public int Quantity_OrderForm { get => quantity_OrderForm; set => quantity_OrderForm = value; }
 
         // Insert Product
         public bool Save()
@@ -151,10 +154,14 @@ namespace STIVE_GestionStock.Models
             return product;
         }
 
-        public static List<Product> GetProducts()
+        public static List<Product> GetProducts(string condition = "")
         {
             List<Product> products = new List<Product>();
             request = "SELECT ID, Name, Description, Quantity, Available, Product_year, Auto_replenishment, Unit_price, Lot_Price, Quantity_lot, URL_Photo, ID_Home, ID_Warehouse, ID_Family FROM product";
+            if (condition != "")
+            {
+                request += " WHERE " + condition;
+            };
             connection = Db.Connection;
             command = new MySqlCommand(request, connection);
             connection.Open();

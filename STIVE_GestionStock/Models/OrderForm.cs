@@ -13,6 +13,7 @@ namespace STIVE_GestionStock.Models
         private bool confirmOrder;
         private Provider provider;
         private List<ProductOrderForm> productorderformlist;
+        private List<Product> products;
 
         private static string request;
         private static MySqlCommand command;
@@ -28,6 +29,7 @@ namespace STIVE_GestionStock.Models
         public Provider Provider { get => provider; set => provider = value; }
         public List<ProductOrderForm> Productorderformlist { get => productorderformlist; set => productorderformlist = value; }
         public bool ConfirmOrder { get => confirmOrder; set => confirmOrder = value; }
+        public List<Product> Products { get => products; set => products = value; }
 
         // Add OrderForm
         public bool Save()

@@ -2,9 +2,6 @@
     ViewData["Title"] = "Bon de commande";
 }
 
-@{
-}
-@model List<Product>
 @inject ILogin _login
 
 <br />
@@ -40,11 +37,12 @@
     </table>
 
     <br />
-
+    
     <div class="row justify-content-center">
-        <div class="col-6">
-            <input type="button" class="btn btn-primary btn-block" value="Commander" onclick="#" />
-
-        </div>
+        <form method="get">
+            <div class="col-6">
+                <input type="submit" value="Valider le bon de commande" class="btn btn-primary" asp-controller="OrderForm" asp-action="ValidOrderForm" />
+            </div>
+        </form>
     </div>
 </div>
