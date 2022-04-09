@@ -11,7 +11,17 @@
     
             <input type="search" id="searchbar" onkeyup="search()" class="form-control rounded" placeholder="Rechercher sur la page..." aria-label="Search"
                    aria-describedby="search-addon" />
-            
+            <div class="btn-group my-3">
+                <button type="button" id="tri" class="btn bg-dark dropdown-toggle text-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Trier
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" onclick="tri(this,'croissant')">Trier par : ordre croissant</a>
+                    <a class="dropdown-item" onclick="tri(this,'decroissant')">Trier par : ordre décroissant</a>
+                    
+                   
+                </div>
+            </div>
         
 
     <br />
@@ -30,13 +40,13 @@
                     }
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="tbody">
                 @foreach (Product p in Model)
                 {
                     <tr class="info">
                         <td><img class="" height="200" src="@p.Url_photo"></td>
                         <td>@p.Name</td>
-                        <td>@p.Unit_price €</td>
+                        <td class="prix">@p.Unit_price €</td>
                         <td><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ShowProduct" asp-route-id="@p.Id"><i class="fas fa-eye"></i></a></td>
                         @if (@_login.isLogged())
                         {

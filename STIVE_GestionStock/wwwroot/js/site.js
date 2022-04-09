@@ -30,3 +30,46 @@ function search() {
         }
     }
 }
+
+//Tri ordre des vins par prix
+function tri(id,ordre) {
+    document.getElementById('tri').textContent = id.textContent;
+ 
+    //parcourir les elements et comparer leur prix.
+    table = document.getElementsByClassName('info');
+    var tbody = document.getElementById('tbody');
+    //Tri des prix par ordre croissant
+    if (ordre == "croissant") {
+        //tri à bulles
+        for (i = 0; i < table.length; i++) {
+            for (var j = 0; j < (table.length - i - 1); j++) {
+
+                tablePrix = parseInt(table[j].childNodes[5].textContent.split(' ')[0]);
+                tablePrixSup = parseInt(table[j + 1].childNodes[5].textContent.split(' ')[0])
+
+                if (tablePrix > tablePrixSup) {
+                    tbody.insertBefore(table[j + 1], table[j]);
+
+                }
+
+
+            }
+        }
+    } else {
+        //Si on veut trier par ordre decroissant
+        for (i = 0; i < table.length; i++) {
+            for (var j = 0; j < (table.length - i - 1); j++) {
+
+                tablePrix = parseInt(table[j].childNodes[5].textContent.split(' ')[0]);
+                tablePrixSup = parseInt(table[j + 1].childNodes[5].textContent.split(' ')[0])
+
+                if (tablePrix < tablePrixSup) {
+                    tbody.insertBefore(table[j + 1], table[j]);
+
+                }
+            }
+        }}
+    
+   
+
+}
