@@ -98,8 +98,12 @@ namespace STIVE_GestionStock.Controllers
             {
                 order.Productorderlist = ProductOrder.GetProductOrders("ID_Order = " + order.Id);
 
+                decimal prixTotal = 0;
+
                 foreach (ProductOrder p in order.Productorderlist)
                 {
+                    prixTotal += p.Total;
+
                     Product product = Product.GetProduct(p.Product.Id);
 
                     int qteDispo = product.Quantity - p.Quantity;
@@ -131,6 +135,7 @@ namespace STIVE_GestionStock.Controllers
 
                 }
 
+                order.Total = prixTotal;
                 order.ConfirmOrder = true;
                 order.Update();
 
@@ -168,7 +173,7 @@ namespace STIVE_GestionStock.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        // Delete Product
+        // Delete ProductOrder
         public IActionResult DeleteProductOrder(int id, int Qte)
         {
             ProductOrder productOrder = ProductOrder.GetProductOrder(id);
@@ -181,6 +186,30 @@ namespace STIVE_GestionStock.Controllers
             }
 
             return RedirectToAction("Index");
+        }        
+        // Historique ProductOrder
+        public IActionResult HistoOrder()
+        {
+            // Récupérer les infos sur l'utilisateur connecté par la session
+            User user = new User();
+            user = user.GetUser(_login.GetIdLogin());
+            List<Order> orders = Order.GetOrders(" ID_User = " + user.Id + " AND ConfirmOrder = true");
+
+            ViewBag.orders = orders;
+
+            return View();
+        }
+                
+        
+        public IActionResult ShowOrder(int id)
+        {
+            Order order = Order.GetOrder(id);
+
+            //récupération des ProductOrder lié à cette commande
+            order.Productorderlist = ProductOrder.GetProductOrders("ID_Order = " + order.Id);
+            ViewBag.Order = order;
+
+            return View();
         }
 
     }
