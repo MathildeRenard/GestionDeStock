@@ -43,19 +43,35 @@
                         <td>@p.Product.Name</td>
                         <td>@p.Quantity</td>
                         <td>@p.Total €</td>
-                        <td><a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="DeleteProductOrder" asp-route-id="@p.Id"><i class="fas fa-minus-circle"></i></a></td>
+                        <td><a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="DeleteProductOrder" asp-route-id="@p.Id" asp-route-Qte="@p.Quantity"><i class="fas fa-minus-circle"></i></a></td>
                     </tr>
                 }
             </tbody>
-
         </table>
 
         <br />
 
         <div class="row justify-content-center">
-            <div class="col-6">
-                <input type="button" class="btn btn-primary btn-block" value="Acheter" onclick="#" />
-
-            </div>
+            <form method="get">
+                <div class="col-6">
+                    <input type="submit" value="Valider le panier" class="btn btn-primary" asp-controller="Order" asp-action="ValidOrder" />
+                </div>
+            </form>
+        </div>
+        <br />
+        <div class="row justify-content-center">
+            <form method="get">
+                <div class="col-6">
+                    <input type="submit" value="Annuler le panier" class="btn btn-danger" asp-controller="Order" asp-action="DeleteOrder" />
+                </div>
+            </form>
+        </div>
+        <br />
+        <div class="row justify-content-center">
+            <form method="get">
+                <div class="col-6">
+                    <input type="submit" value="Historique des commandes" class="btn btn-success" asp-controller="Order" asp-action="HistoOrder" />
+                </div>
+            </form>
         </div>
     </div>

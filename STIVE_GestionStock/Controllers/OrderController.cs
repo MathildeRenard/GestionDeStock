@@ -15,8 +15,10 @@ namespace STIVE_GestionStock.Controllers
         {
             _login = login;
         }
+
         public IActionResult Index(int idProduct, int Qte)
         {
+
             // Récupérer les infos sur l'utilisateur connecté par la session
             User user = new User();
             user = user.GetUser(_login.GetIdLogin());
@@ -35,12 +37,21 @@ namespace STIVE_GestionStock.Controllers
                 order.User = user;
 
                 order.Save();
+
+                order.Productorderlist = ProductOrder.GetProductOrders("ID_Order = " + order.Id);
             }
 
             if ( idProduct != 0 )
             {
+                Product product = Product.GetProduct(idProduct);
+                int qteDispo = product.Quantity - Qte;
+                if (qteDispo < 0 && product.Auto_replenishment == false)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+
                 bool bAdd = true;
-                // Test si le produit est éjà dans la commande
+                // Test si le produit est déjà dans la commande
                 foreach ( ProductOrder p in order.Productorderlist )
                 {
                     if ( p.Product.Id == idProduct)
@@ -57,7 +68,7 @@ namespace STIVE_GestionStock.Controllers
                 // Ajout du product dans l'Order Via l'objet ProductOrder
                 ProductOrder productOrder = new ProductOrder();
                 productOrder.Order = order;
-                productOrder.Product = Product.GetProduct(idProduct);
+                productOrder.Product = product;
                 productOrder.Quantity = Qte;
                 productOrder.Total = (Qte * productOrder.Product.Unit_price);
 
@@ -66,23 +77,139 @@ namespace STIVE_GestionStock.Controllers
                 // Ajout du productOrder dans la liste des products de l'Order
                 order.Productorderlist.Add(productOrder);
                 }
+
+                product.Quantity = product.Quantity - Qte;
+                product.Update();
             }
 
             ViewBag.Order = order;
 
             return View();
         }
-        // Delete Product
-        public IActionResult DeleteProductOrder(int id)
+
+        public IActionResult ValidOrder()
+        {
+            // Récupérer les infos sur l'utilisateur connecté par la session
+            User user = new User();
+            user = user.GetUser(_login.GetIdLogin());
+            Order order = Order.GetOrderByIdUser(user.Id);
+
+            if (order != null)
+            {
+                order.Productorderlist = ProductOrder.GetProductOrders("ID_Order = " + order.Id);
+
+                decimal prixTotal = 0;
+
+                foreach (ProductOrder p in order.Productorderlist)
+                {
+                    prixTotal += p.Total;
+
+                    Product product = Product.GetProduct(p.Product.Id);
+
+                    int qteDispo = product.Quantity - p.Quantity;
+
+                    if (qteDispo < 0)
+                    {
+                        Provider provider = Provider.GetProvider(product.Provider.Id);
+
+                        OrderForm orderform = new OrderForm();
+                        orderform.Date = DateTime.Now;
+                        orderform.Provider = provider;
+                        orderform.ConfirmOrder = true;
+
+                        orderform.Save();
+
+                        ProductOrderForm productOrderForm = new ProductOrderForm();
+                        productOrderForm.Orderform = orderform;
+                        productOrderForm.Product = product;
+                        productOrderForm.Quantity = System.Math.Abs(qteDispo);
+
+                        productOrderForm.Save();
+
+                        product.Quantity = product.Quantity + System.Math.Abs(qteDispo);
+                        product.Update();
+                    }
+
+                    product.Quantity = product.Quantity - p.Quantity;
+                    product.Update();
+
+                }
+
+                order.Total = prixTotal;
+                order.ConfirmOrder = true;
+                order.Update();
+
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult DeleteOrder()
+        {
+            // Récupérer les infos sur l'utilisateur connecté par la session
+            User user = new User();
+            user = user.GetUser(_login.GetIdLogin());
+            Order order = Order.GetOrderByIdUser(user.Id);
+
+            if (order != null)
+            {
+                order.Productorderlist = ProductOrder.GetProductOrders("ID_Order = " + order.Id);
+
+                foreach (ProductOrder p in order.Productorderlist)
+                {
+                    Product product = Product.GetProduct(p.Product.Id);
+
+                    product.Quantity = product.Quantity + p.Quantity;
+                    product.Update();
+
+                    p.Delete();
+                }
+
+                order.Delete();
+
+                return RedirectToAction("Index", "Home");
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        // Delete ProductOrder
+        public IActionResult DeleteProductOrder(int id, int Qte)
         {
             ProductOrder productOrder = ProductOrder.GetProductOrder(id);
 
             if (productOrder != null)
             {
+                productOrder.Product.Quantity = productOrder.Product.Quantity + Qte;
+                productOrder.Product.Update();
                 productOrder.Delete();
             }
 
             return RedirectToAction("Index");
+        }        
+        // Historique ProductOrder
+        public IActionResult HistoOrder()
+        {
+            // Récupérer les infos sur l'utilisateur connecté par la session
+            User user = new User();
+            user = user.GetUser(_login.GetIdLogin());
+            List<Order> orders = Order.GetOrders(" ID_User = " + user.Id + " AND ConfirmOrder = true");
+
+            ViewBag.orders = orders;
+
+            return View();
+        }
+                
+        
+        public IActionResult ShowOrder(int id)
+        {
+            Order order = Order.GetOrder(id);
+
+            //récupération des ProductOrder lié à cette commande
+            order.Productorderlist = ProductOrder.GetProductOrders("ID_Order = " + order.Id);
+            ViewBag.Order = order;
+
+            return View();
         }
 
     }

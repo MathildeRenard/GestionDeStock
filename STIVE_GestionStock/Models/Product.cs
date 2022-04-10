@@ -22,6 +22,9 @@ namespace STIVE_GestionStock.Models
         private Home home;
         private Warehouse warehouse;
         private Family family;
+        private Provider provider;
+
+        private int quantity_OrderForm;
 
         private static string request;
         private static MySqlCommand command;
@@ -46,11 +49,13 @@ namespace STIVE_GestionStock.Models
         public Home Home { get => home; set => home = value; }
         public Warehouse Warehouse { get => warehouse; set => warehouse = value; }
         public Family Family { get => family; set => family = value; }
+        public int Quantity_OrderForm { get => quantity_OrderForm; set => quantity_OrderForm = value; }
+        public Provider Provider { get => provider; set => provider = value; }
 
         // Insert Product
         public bool Save()
         {
-            request = "INSERT INTO product (Name, Description, Quantity, Available, Product_year, Auto_replenishment, Unit_price, Lot_Price, Quantity_lot, URL_Photo, ID_Home, ID_Warehouse, ID_Family) values (@Name, @Description, @Quantity, @Available, @Product_year, @auto_replenishment, @Unit_price, @Lot_Price, @Quantity_lot, @URL_Photo, @ID_Home, @ID_Warehouse, @ID_Family); SELECT LAST_INSERT_ID()";
+            request = "INSERT INTO product (Name, Description, Quantity, Available, Product_year, Auto_replenishment, Unit_price, Lot_Price, Quantity_lot, URL_Photo, ID_Home, ID_Warehouse, ID_Family, ID_Provider) values (@Name, @Description, @Quantity, @Available, @Product_year, @auto_replenishment, @Unit_price, @Lot_Price, @Quantity_lot, @URL_Photo, @ID_Home, @ID_Warehouse, @ID_Family, @ID_Provider); SELECT LAST_INSERT_ID()";
             connection = Db.Connection;
             command = new MySqlCommand(request, connection);
             command.Parameters.Add(new MySqlParameter("@Name", Name));
@@ -66,6 +71,7 @@ namespace STIVE_GestionStock.Models
             command.Parameters.Add(new MySqlParameter("@ID_Home", Home.Id_Home));
             command.Parameters.Add(new MySqlParameter("@ID_Warehouse", Warehouse.Id_Warehouse));
             command.Parameters.Add(new MySqlParameter("@ID_Family", Family.Id_Family));
+            command.Parameters.Add(new MySqlParameter("@ID_Provider", Provider.Id));
 
             connection.Open();
             Id = Convert.ToInt32(command.ExecuteScalar());
@@ -77,7 +83,7 @@ namespace STIVE_GestionStock.Models
         //Update Product
         public bool Update()
         {
-            request = "Update product set Name=@Name, Description=@Description, Quantity=@Quantity, Available=@Available, Product_year=@Product_year, Auto_replenishment=@Auto_remplishment, Lot_price=@Lot_price, Unit_Price=@Unit_price ,Quantity_lot=@Quantity_lot,URL_Photo=@URL_Photo, ID_Home=@ID_Home, ID_Warehouse=@ID_Warehouse, ID_Family=@ID_Family where id=@id";
+            request = "Update product set Name=@Name, Description=@Description, Quantity=@Quantity, Available=@Available, Product_year=@Product_year, Auto_replenishment=@Auto_remplishment, Lot_price=@Lot_price, Unit_Price=@Unit_price ,Quantity_lot=@Quantity_lot,URL_Photo=@URL_Photo, ID_Home=@ID_Home, ID_Warehouse=@ID_Warehouse, ID_Family=@ID_Family, ID_Provider=@ID_Provider where id=@id";
             connection = Db.Connection;
             command = new MySqlCommand(request, connection);
             command.Parameters.Add(new MySqlParameter("@id", Id));
@@ -94,6 +100,8 @@ namespace STIVE_GestionStock.Models
             command.Parameters.Add(new MySqlParameter("@ID_Home", Home.Id_Home));
             command.Parameters.Add(new MySqlParameter("@ID_Warehouse", Warehouse.Id_Warehouse));
             command.Parameters.Add(new MySqlParameter("@ID_Family", Family.Id_Family));
+            command.Parameters.Add(new MySqlParameter("@ID_Provider", Provider.Id));
+
             connection.Open();
             int nbRow = command.ExecuteNonQuery();
             command.Dispose();
@@ -119,7 +127,7 @@ namespace STIVE_GestionStock.Models
         public static Product GetProduct(int Id)
         {
             Product product = null;
-            request = "SELECT ID, Name, Description, Quantity, Available, Product_year, Auto_replenishment, Unit_price, Lot_Price, Quantity_lot, URL_Photo, ID_Home, ID_Warehouse, ID_Family FROM product where Id= @Id";
+            request = "SELECT ID, Name, Description, Quantity, Available, Product_year, Auto_replenishment, Unit_price, Lot_Price, Quantity_lot, URL_Photo, ID_Home, ID_Warehouse, ID_Family, ID_Provider FROM product where Id= @Id";
             connection = Db.Connection;
             command = new MySqlCommand(request, connection);
             command.Parameters.Add(new MySqlParameter("Id", Id));
@@ -142,7 +150,8 @@ namespace STIVE_GestionStock.Models
                     Url_photo = reader.GetString(10),
                     Home = Home.GetHome(reader.GetInt32(11)),
                     Warehouse = Warehouse.GetWarehouse(reader.GetInt32(12)),
-                    Family = Family.GetFamily(reader.GetInt32(13))
+                    Family = Family.GetFamily(reader.GetInt32(13)),
+                    Provider = Provider.GetProvider(reader.GetInt32(14))
                 };
             }
             reader.Close();
@@ -151,10 +160,14 @@ namespace STIVE_GestionStock.Models
             return product;
         }
 
-        public static List<Product> GetProducts()
+        public static List<Product> GetProducts(string condition = "")
         {
             List<Product> products = new List<Product>();
-            request = "SELECT ID, Name, Description, Quantity, Available, Product_year, Auto_replenishment, Unit_price, Lot_Price, Quantity_lot, URL_Photo, ID_Home, ID_Warehouse, ID_Family FROM product";
+            request = "SELECT ID, Name, Description, Quantity, Available, Product_year, Auto_replenishment, Unit_price, Lot_Price, Quantity_lot, URL_Photo, ID_Home, ID_Warehouse, ID_Family, ID_Provider FROM product";
+            if (condition != "")
+            {
+                request += " WHERE " + condition;
+            };
             connection = Db.Connection;
             command = new MySqlCommand(request, connection);
             connection.Open();
@@ -176,7 +189,8 @@ namespace STIVE_GestionStock.Models
                     Url_photo = reader.GetString(10),
                     Home = Home.GetHome(reader.GetInt32(11)),
                     Warehouse = Warehouse.GetWarehouse(reader.GetInt32(12)),
-                    Family = Family.GetFamily(reader.GetInt32(13))
+                    Family = Family.GetFamily(reader.GetInt32(13)),
+                    Provider = Provider.GetProvider(reader.GetInt32(14))
                 };
                 products.Add(product);
             }

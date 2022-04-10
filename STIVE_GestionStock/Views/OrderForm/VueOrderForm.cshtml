@@ -1,0 +1,56 @@
+﻿@{
+    ViewData["Title"] = "Bon de commande";
+}
+
+@inject ILogin _login
+
+<br />
+
+<h1>Bon de commande n° @ViewBag.OrderForm.Id</h1>
+
+<br />
+
+<div class="container">
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Photo</th>
+                <th scope="col">Nom du produit</th>
+                <th scope="col">Quantité</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (ProductOrderForm p in ViewBag.OrderForm.Productorderformlist)
+            {
+                <tr>
+                    <td><img class="" height="200" src="@p.Product.Url_photo"></td>
+                    <td>@p.Product.Name</td>
+                    <td>@p.Quantity</td>
+                    <td><a class="nav-link text-dark" asp-area="" asp-controller="OrderForm" asp-action="DeleteProductOrderForm" asp-route-id="@p.Id"><i class="fas fa-minus-circle"></i></a></td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+
+    <br />
+
+    <div class="row justify-content-center">
+        <form method="get">
+            <div class="col-6">
+                <input type="submit" value="Valider le bon de commande" class="btn btn-primary" asp-controller="OrderForm" asp-action="ValidOrderForm" />
+            </div>
+        </form>
+    </div>
+    <br />
+    <div class="row justify-content-center">
+        <form method="get">
+            <div class="col-6">
+                <input type="submit" value="Annuler le bon de commande" class="btn btn-danger" asp-controller="OrderForm" asp-action="DeleteOrderForm" />
+            </div>
+        </form>
+    </div>
+</div>

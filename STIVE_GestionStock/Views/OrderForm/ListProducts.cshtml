@@ -1,0 +1,65 @@
+﻿
+@{
+    ViewData["Title"] = "Bon de commande";
+}
+
+@{
+}
+@inject ILogin _login
+
+<br />
+
+<div class="container">
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Photo</th>
+                    <th scope="col">Nom du produit</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+
+@*                @foreach (Product p in ViewBag.OrderForm.Products)
+                {
+                    <tr>
+                        <td><img class="" height="200" src="@p.Url_photo"></td>
+                        <td>@p.Name</td>
+                        <td><input id="Qte" class="form-control" name="Qte" type="number" value="@p.Quantity_OrderForm" /></td>
+                    </tr>
+                }*@
+
+                @for (int i = 0; i < ViewBag.OrderForm.Products.Count; i++)
+                {
+                <tr>
+                    <td><img class="" height="200" src="@ViewBag.OrderForm.Products[i].Url_photo"></td>
+                    <td>@ViewBag.OrderForm.Products[i].Name</td>
+                    <td>
+                        <form method="get">
+                            <input id="Qte" class="form-control" name="Qte" type="number" value="0" />
+                            <input id="idOrderForm" class="form-control" name="idOrderForm" type="number" value="@_login.GetOrderForm()" hidden />
+                            <input id="idProduct" class="form-control" name="idProduct" type="number" value="@ViewBag.OrderForm.Products[i].Id" hidden />
+                            <input id="idFournisseur" class="form-control" name="idFournisseur" type="number" value="@_login.GetFournisseur()" hidden />
+                            <br />
+
+                            <input type="submit" value="Ajouter au bon de commande" class="btn btn-primary" asp-controller="OrderForm" asp-action="AddOrderForm" />
+
+                        </form>
+                    </td>
+                </tr>
+
+                }
+            </tbody>
+
+        </table>
+
+        <br />
+
+@*        <div class="row justify-content-center">
+            <div class="col-6">
+                <button type="submit" class="btn btn-primary btn-block">Créer le bon de commande</button>
+            </div>
+        </div>*@
+
+</div>

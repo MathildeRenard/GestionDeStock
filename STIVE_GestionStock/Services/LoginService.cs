@@ -29,10 +29,31 @@ namespace STIVE_GestionStock.Services
             return _accessor.HttpContext.Session.GetString("role");
         }
 
+        public int GetFournisseur()
+        {
+            return Convert.ToInt32(_accessor.HttpContext.Session.GetInt32("fournisseur"));
+        }        
+        public int GetOrderForm()
+        {
+            return Convert.ToInt32(_accessor.HttpContext.Session.GetInt32("idOrderForm"));
+        }
+
         public bool isLogged()
         {
             string test = _accessor.HttpContext.Session.GetString("isLogged");
             return test == "true";
+        }
+
+        public bool SetFournisseur(int idProvider)
+        {
+            _accessor.HttpContext.Session.SetInt32("fournisseur", idProvider);
+            return true;
+        }        
+        
+        public bool SetOrderForm(int idOrderForm)
+        {
+            _accessor.HttpContext.Session.SetInt32("idOrderForm", idOrderForm);
+            return true;
         }
 
         public bool LogIn(string login, string password)

@@ -24,15 +24,32 @@
                     <div class="collapse navbar-collapse" id="navbar4">
                         <ul class="navbar-nav mr-auto pl-lg-4">
                             <li class="nav-item px-lg-2">
-                                @if (@_login.isLogged())
+                                @if (@_login.isLogged() && @_login.GetRole() == "Admin")
                                 {
                                     <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="Admin">
                                         <span class="d-inline-block d-lg-none icon-width"><i class="far fa-envelope"></i></span>Admin
                                     </a>
                                 }
                             </li>
+                            <li class="nav-item px-lg-2">
+                                @if (@_login.isLogged() && @_login.GetRole() == "Admin")
+                                {
+                                    <a class="nav-link" asp-area="" asp-controller="OrderForm" asp-action="Index">
+                                        <span class="d-inline-block d-lg-none icon-width"><i class="far fa-envelope"></i></span>Bon de commande
+                                    </a>
+                                }
+                            </li>
                         </ul>
                         <ul class="navbar-nav ml-auto mt-3 mt-lg-0">
+                            <li class="nav-item">
+                                @if (@_login.isLogged() && @_login.GetRole() == "Admin")
+                                {
+                                        <a class="nav-link" asp-controller="OrderForm" asp-action="VueOrderForm">
+                                            <i class="fas fa-shopping-cart"></i><span class="d-lg-none ml-3">Bon de commande</span>
+                                        </a>
+
+                                }
+                            </li>
                             <li class="nav-item">
                                 @if (@_login.isLogged())
                                 {
@@ -57,7 +74,7 @@
                                         <i class="fas fa-edit"></i><span class="d-lg-none ml-3">S'inscrire</span>
                                     </a>
                                 }
-                                </li>
+                            </li>
                             <li class="nav-item">
                                 @if (@_login.isLogged())
                                 {
