@@ -9,6 +9,22 @@
 
 <h1>Catalogue des vins</h1>
 
+<input type="search" id="searchbar" onkeyup="search()" class="form-control rounded" placeholder="Rechercher sur la page..." aria-label="Search"
+       aria-describedby="search-addon" />
+<div class="btn-group my-3">
+    <button type="button" id="tri" class="btn bg-dark dropdown-toggle text-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Trier
+    </button>
+    <div class="dropdown-menu">
+        <a style="cursor:pointer;" class="dropdown-item" onclick="tri(this,'croissant')">Trier par : ordre croissant</a>
+        <a style="cursor:pointer;" class="dropdown-item" onclick="tri(this,'decroissant')">Trier par : ordre décroissant</a>
+
+
+    </div>
+</div>
+
+
+
 <br />
 
 <div class="container">
@@ -23,30 +39,30 @@
                 {
                     <th scope="col"></th>
                 }
-                </tr>
+            </tr>
         </thead>
-        <tbody>
+        <tbody id="tbody">
             @foreach (Product p in Model)
             {
-            <tr>
-                <td><img class="" height="200" src="@p.Url_photo"></td>
-                <td>@p.Name</td>
-                <td>@p.Unit_price €</td>
-                <td><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ShowProduct" asp-route-id="@p.Id"><i class="fas fa-eye"></i></a></td>
-                @if (@_login.isLogged())
-                {
-            <td>
-@*                <input class="form-control" id="Qte" type="number" name="Qte" placeholder="Quantité" value="1" runat="server" />
-                <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="Index" asp-route-id="@p.Id" asp-route-Qte="@Qte.Value" runat="server"><i class="fas fa-cart-plus"></i></a>*@
-                <form method="get">
-                    <input id="Qte" class="form-control" name="Qte" type="number" value="1" />
-                    <input id="idProduct" class="form-control" name="idProduct" type="number" value="@p.Id" hidden />
-                    <br />
+                <tr class="info">
+                    <td><img class="" height="200" src="@p.Url_photo"></td>
+                    <td>@p.Name</td>
+                    <td class="prix">@p.Unit_price €</td>
+                    <td><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ShowProduct" asp-route-id="@p.Id"><i class="fas fa-eye"></i></a></td>
+                    @if (@_login.isLogged())
+                    {
+                        <td>
+                            @*                <input class="form-control" id="Qte" type="number" name="Qte" placeholder="Quantité" value="1" runat="server" />
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="Index" asp-route-id="@p.Id" asp-route-Qte="@Qte.Value" runat="server"><i class="fas fa-cart-plus"></i></a>*@
+                            <form method="get">
+                                <input id="Qte" class="form-control" name="Qte" type="number" value="1" />
+                                <input id="idProduct" class="form-control" name="idProduct" type="number" value="@p.Id" hidden />
+                                <br />
 
-                    <input type="submit" value="Ajouter au panier" class="btn btn-primary" asp-controller="Order" asp-action="Index" />
-                </form>
-            </td>
-                }
+                                <input type="submit" value="Ajouter au panier" class="btn btn-primary" asp-controller="Order" asp-action="Index" />
+                            </form>
+                        </td>
+                    }
                 </tr>
             }
         </tbody>
