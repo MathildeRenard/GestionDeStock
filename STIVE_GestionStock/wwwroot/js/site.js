@@ -26,7 +26,7 @@ function search() {
             table[i].style.display = "none";
         }
         else {
-            table[i].style.display = "block";
+            table[i].style.display = "tr";
         }
     }
 }
