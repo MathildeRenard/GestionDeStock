@@ -4,26 +4,53 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using STIVE_GestionStock.Models;
+using STIVE_GestionStock.Services;
 
 namespace STIVE_GestionStock.Controllers
 {
     public class AdminController : Controller
-    {   
+
+    {
         // Vue Admin
+        private ILogin _login;
+
+        public AdminController(ILogin login)
+        {
+            _login = login;
+        }
+        
         public IActionResult Admin()
         {
-            return View();
+            //restreindre l'accès de la page aux admin
+            if (_login.GetRole() != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            
+                return View();
+            
         }
 
         // Liste des produits
         public IActionResult ListProduct()
         {
-            return View(Product.GetProducts());
+           
+            if (_login.GetRole() != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            
+                return View(Product.GetProducts());
+            
         }
 
         // Ajout produits
         public IActionResult AddProduct()
         {
+            if (_login.GetRole() != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
             ViewBag.Home = Home.GetHomes();
             ViewBag.Family = Family.GetFamilies();
             ViewBag.Warehouse = Warehouse.GetWarehouses();
@@ -43,6 +70,10 @@ namespace STIVE_GestionStock.Controllers
         // Edit produits
         public IActionResult EditProduct(int id)
         {
+            if (_login.GetRole() != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
             ViewBag.Home = Home.GetHomes();
             ViewBag.Family = Family.GetFamilies();
             ViewBag.Warehouse = Warehouse.GetWarehouses();
@@ -80,12 +111,20 @@ namespace STIVE_GestionStock.Controllers
         // Liste des maisons
         public IActionResult ListHome()
         {
+            if (_login.GetRole() != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View(Home.GetHomes());
         }
 
         // Ajout maisons
         public IActionResult AddHome()
         {
+            if (_login.GetRole() != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
             ViewBag.Home = Home.GetHomes();
             return View();
         }
@@ -98,6 +137,10 @@ namespace STIVE_GestionStock.Controllers
         // Edit maisons
         public IActionResult EditHome(int id)
         {
+            if (_login.GetRole() != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
             ViewBag.Home = Home.GetHome(id);
             return View();
         }
@@ -130,12 +173,20 @@ namespace STIVE_GestionStock.Controllers
         // Liste des fournisseurs
         public IActionResult ListProvider()
         {
+            if (_login.GetRole() != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View(Provider.GetProviders());
         }
 
         // Ajout fournisseurs
         public IActionResult AddProvider()
         {
+            if (_login.GetRole() != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
             ViewBag.Provider = Provider.GetProviders();
             return View();
         }
@@ -148,6 +199,10 @@ namespace STIVE_GestionStock.Controllers
         // Edit fournisseurs
         public IActionResult EditProvider(int id)
         {
+            if (_login.GetRole() != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
             ViewBag.Provider = Provider.GetProviders();
             ViewBag.Provider = Provider.GetProvider(id);
             return View();
@@ -180,12 +235,20 @@ namespace STIVE_GestionStock.Controllers
         // Liste des familles
         public IActionResult ListFamily()
         {
+            if (_login.GetRole() != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View(Family.GetFamilies());
         }
 
         // Ajout familles
         public IActionResult AddFamily()
         {
+            if (_login.GetRole() != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
             ViewBag.Family = Family.GetFamilies();
             return View();
         }
@@ -198,6 +261,10 @@ namespace STIVE_GestionStock.Controllers
         // Edit familles
         public IActionResult EditFamily(int id)
         {
+            if (_login.GetRole() != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
             ViewBag.Family = Family.GetFamilies();
             ViewBag.Family = Family.GetFamily(id);
             return View();
@@ -230,12 +297,20 @@ namespace STIVE_GestionStock.Controllers
         // Liste des entrepots
         public IActionResult ListWarehouse()
         {
+            if (_login.GetRole() != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View(Warehouse.GetWarehouses());
         }
 
         // Ajout entrepots
         public IActionResult AddWarehouse()
         {
+            if (_login.GetRole() != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
             ViewBag.Warehouse = Warehouse.GetWarehouses();
             return View();
         }
@@ -248,6 +323,10 @@ namespace STIVE_GestionStock.Controllers
         // Edit entrepots
         public IActionResult EditWarehouse(int id)
         {
+            if (_login.GetRole() != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
             ViewBag.Warehouse = Warehouse.GetWarehouses();
             ViewBag.Warehouse = Warehouse.GetWarehouse(id);
             return View();
