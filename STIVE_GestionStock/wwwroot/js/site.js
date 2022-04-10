@@ -69,7 +69,6 @@ function tri(id,ordre) {
                 }
             }
         }}
-    
-   
+
 
 }
