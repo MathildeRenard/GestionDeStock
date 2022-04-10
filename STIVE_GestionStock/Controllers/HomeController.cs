@@ -21,7 +21,7 @@ namespace STIVE_GestionStock.Controllers
 
         public IActionResult Index()
         {
-            return View(Product.GetProducts());
+            return View(Product.GetProducts("Available = true"));
         }
 
         public IActionResult ShowProduct(int id)

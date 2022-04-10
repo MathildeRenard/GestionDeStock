@@ -26,14 +26,14 @@ namespace STIVE_GestionStock.Controllers
             {
                 ViewBag.Provider = Provider.GetProviders("ID = " + idProvider);
                 return RedirectToAction("ListProducts", Provider.GetProvider(idProvider));
-               // return View();
+                // return View();
             }
             else
             {
                 ViewBag.Provider = Provider.GetProviders();
                 return View();
             }
-            
+
         }
 
         // Liste des produits en fonction du fournisseur choisi
@@ -97,13 +97,13 @@ namespace STIVE_GestionStock.Controllers
 
                             productOrderForm.Save();
 
-                            return RedirectToAction("ListProducts", Provider.GetProvider(idFournisseur));
+                            return RedirectToAction("VueOrderForm");
                         }
                         else
                         {
-                            return RedirectToAction("ListProducts", Provider.GetProvider(idFournisseur));
+                            return RedirectToAction("VueOrderForm");
                         }
-                    } 
+                    }
                     else
                     {
                         return RedirectToAction("ListProducts", Provider.GetProvider(idFournisseur));
@@ -139,7 +139,7 @@ namespace STIVE_GestionStock.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            
+
         }
 
         public IActionResult ValidOrderForm()
@@ -166,9 +166,29 @@ namespace STIVE_GestionStock.Controllers
                 _login.SetFournisseur(0);
 
             }
-                return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Home");
         }
 
+        public IActionResult DeleteOrderForm()
+        {
+            int idOrderform = _login.GetOrderForm();
+            if (idOrderform != 0)
+            {
+                OrderForm orderform = OrderForm.GetOrderForm(idOrderform);
+                orderform.Productorderformlist = ProductOrderForm.GetProductOrdersForm("ID_OrderForm = " + orderform.Id);
+
+                foreach (ProductOrderForm p in orderform.Productorderformlist)
+                {
+                    p.Delete();
+                }
+
+                _login.SetOrderForm(0);
+                _login.SetFournisseur(0);
+                orderform.Delete();
+            }
+
+            return RedirectToAction("VueOrderForm");
+        }
         // Delete Product
         public IActionResult DeleteProductOrderForm(int id)
         {

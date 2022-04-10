@@ -27,14 +27,16 @@ namespace STIVE_GestionStock.Controllers
             ViewBag.Home = Home.GetHomes();
             ViewBag.Family = Family.GetFamilies();
             ViewBag.Warehouse = Warehouse.GetWarehouses();
+            ViewBag.Provider = Provider.GetProviders();
 
             return View();
         }        
-        public IActionResult SubmitAddFormProduct(Product product, Home home, Family family, Warehouse warehouse)
+        public IActionResult SubmitAddFormProduct(Product product, Home home, Family family, Warehouse warehouse, Provider provider)
         {
             product.Home = home;
             product.Family = family;
             product.Warehouse = warehouse;
+            product.Provider = provider;
             product.Save();
 
             return RedirectToAction("ListProduct");
@@ -46,15 +48,17 @@ namespace STIVE_GestionStock.Controllers
             ViewBag.Home = Home.GetHomes();
             ViewBag.Family = Family.GetFamilies();
             ViewBag.Warehouse = Warehouse.GetWarehouses();
+            ViewBag.Provider = Provider.GetProviders();
             ViewBag.Product = Product.GetProduct(id);
             return View();
         }
 
-        public IActionResult SubmitEditFormProduct(Product product, Home home, Family family, Warehouse warehouse)
+        public IActionResult SubmitEditFormProduct(Product product, Home home, Family family, Warehouse warehouse, Provider provider)
         {
             product.Home = home;
             product.Family = family;
             product.Warehouse = warehouse;
+            product.Provider = provider;
             product.Update();
 
             return RedirectToAction("ListProduct");

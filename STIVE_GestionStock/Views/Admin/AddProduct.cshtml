@@ -38,7 +38,7 @@
     </div>
     <br />
     <div class="row">
-        <div class="col-4">
+        <div class="col-3">
             <label class="" for="home">Maison</label>
             <select class="form-control" id="home" name="id_Home" aria-label="Maison">
                 @foreach (Home h in ViewBag.Home)
@@ -47,7 +47,7 @@
                 }
             </select>
         </div>
-        <div class="col-4">
+        <div class="col-3">
             <label class="" for="family">Famille</label>
             <select class="form-control" id="family" name="id_Family" aria-label="Famille">
                 @foreach (Family f in ViewBag.Family)
@@ -56,7 +56,7 @@
                 }
             </select>
         </div>
-        <div class="col-4">
+        <div class="col-3">
             <label class="" for="warehouse">Entrepôt</label>
             <select class="form-control" id="warehouse" name="id_Warehouse" aria-label="Entrepot">
                 @foreach (Warehouse w in ViewBag.Warehouse)
@@ -64,6 +64,22 @@
                     <option value="@w.Id_Warehouse">@w.Name</option>
                 }
             </select>
+        </div>
+        <div class="col-3">
+            <label class="" for="provider">Fournisseur</label>
+            <select class="form-control" id="provider" name="id" aria-label="Fournisseur">
+                @foreach (Provider p in ViewBag.Provider)
+                {
+                    <option value="@p.Id">@p.Name</option>
+                }
+            </select>
+        </div>
+    </div>
+    <br />
+    <div class="row justify-content-center">
+        <div class="form-check col-3">
+            <input class="form-check-input position-static" type="checkbox" id="gridCheck" name="available" value="true">
+            <label class="form-check-label" for="gridCheck">Disponnible</label>
         </div>
     </div>
     <br />

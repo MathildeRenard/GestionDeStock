@@ -37,11 +37,19 @@
     </table>
 
     <br />
-    
+
     <div class="row justify-content-center">
         <form method="get">
             <div class="col-6">
                 <input type="submit" value="Valider le bon de commande" class="btn btn-primary" asp-controller="OrderForm" asp-action="ValidOrderForm" />
+            </div>
+        </form>
+    </div>
+    <br />
+    <div class="row justify-content-center">
+        <form method="get">
+            <div class="col-6">
+                <input type="submit" value="Annuler le bon de commande" class="btn btn-danger" asp-controller="OrderForm" asp-action="DeleteOrderForm" />
             </div>
         </form>
     </div>
