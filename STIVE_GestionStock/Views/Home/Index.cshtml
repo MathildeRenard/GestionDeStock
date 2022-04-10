@@ -44,31 +44,10 @@
         <tbody id="tbody">
             @foreach (Product p in Model)
             {
-<<<<<<< HEAD
-                <tr class="info">
-                    <td><img class="" height="200" src="@p.Url_photo"></td>
-                    <td>@p.Name</td>
-                    <td class="prix">@p.Unit_price €</td>
-                    <td><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ShowProduct" asp-route-id="@p.Id"><i class="fas fa-eye"></i></a></td>
-                    @if (@_login.isLogged())
-                    {
-                        <td>
-                            @*                <input class="form-control" id="Qte" type="number" name="Qte" placeholder="Quantité" value="1" runat="server" />
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="Index" asp-route-id="@p.Id" asp-route-Qte="@Qte.Value" runat="server"><i class="fas fa-cart-plus"></i></a>*@
-                            <form method="get">
-                                <input id="Qte" class="form-control" name="Qte" type="number" value="1" />
-                                <input id="idProduct" class="form-control" name="idProduct" type="number" value="@p.Id" hidden />
-                                <br />
-
-                                <input type="submit" value="Ajouter au panier" class="btn btn-primary" asp-controller="Order" asp-action="Index" />
-                            </form>
-                        </td>
-                    }
-=======
-            <tr>
+            <tr class="info">
                 <td><img class="" height="200" src="@p.Url_photo"></td>
                 <td>@p.Name</td>
-                <td>@p.Unit_price €</td>
+                <td class="prix">@p.Unit_price €</td>
                 <td><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ShowProduct" asp-route-id="@p.Id"><i class="fas fa-eye"></i></a></td>
                 @if (@_login.isLogged())
                 {
@@ -89,7 +68,6 @@
                 </form>
             </td>
                 }
->>>>>>> orderform
                 </tr>
             }
         </tbody>
