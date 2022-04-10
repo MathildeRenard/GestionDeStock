@@ -19,7 +19,7 @@ namespace STIVE_GestionStock.Models
         private string lastName;
         private string firstName;
         private string adress;
-        private Int32 phone;
+        private string phone;
         static private Role role = new Role();
         private static string request;
         private static MySqlConnection connection;
@@ -36,7 +36,7 @@ namespace STIVE_GestionStock.Models
         public string LastName { get => lastName; set => lastName = value; }
         public string FirstName { get => firstName; set => firstName = value; }
         public string Adress { get => adress; set => adress = value; }
-        public Int32 Phone { get => phone; set => phone = value; }
+        public string Phone { get => phone; set => phone = value; }
         public string Login { get => login; set => login = value; }
         public Role Role { get => role; set => role = value; }
 
@@ -205,7 +205,7 @@ namespace STIVE_GestionStock.Models
                     Id = reader.GetInt32(0),
                     FirstName = reader.GetString(1),
                     LastName = reader.GetString(2),
-                    Phone = reader.GetInt32(3),
+                    Phone = reader.GetString(3),
                     Adress = reader.GetString(7),
                     Mail = reader.GetString(4),
                     Login = reader.GetString(8),
@@ -247,7 +247,7 @@ namespace STIVE_GestionStock.Models
                 Id = reader.GetInt32(0),
                 FirstName = reader.GetString(1),
                 LastName = reader.GetString(2),
-                Phone = reader.GetInt32(3),
+                Phone = reader.GetString(3),
                 Adress = reader.GetString(7),
                 Mail = reader.GetString(4),
                 Login = reader.GetString(8),
