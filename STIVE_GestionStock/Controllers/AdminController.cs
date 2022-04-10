@@ -149,8 +149,9 @@ namespace STIVE_GestionStock.Controllers
             return View();
         }
 
-        public IActionResult SubmitEditFormHome(Home home)
+        public IActionResult SubmitEditFormHome(Home home,int id)
         {
+            home.Id_Home = id;
             home.Update();
 
             return RedirectToAction("ListHome");
@@ -274,8 +275,9 @@ namespace STIVE_GestionStock.Controllers
             return View();
         }
 
-        public IActionResult SubmitEditFormFamily(Family family)
+        public IActionResult SubmitEditFormFamily(Family family,int id)
         {
+            family.Id_Family = id;
             family.Update();
 
             return RedirectToAction("ListFamily");
@@ -338,6 +340,7 @@ namespace STIVE_GestionStock.Controllers
 
         public IActionResult SubmitEditFormWarehouse(Warehouse warehouse)
         {
+            
             warehouse.Update();
 
             return RedirectToAction("ListWarehouse");
