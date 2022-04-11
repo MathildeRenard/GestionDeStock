@@ -90,6 +90,7 @@ namespace STIVE_GestionStock.Models
                 {
                     id_Warehouse = reader.GetInt32(0),
                     Name = reader.GetString(1),
+                    Adress = reader.GetString(2)
                 };
             }
             reader.Close();
