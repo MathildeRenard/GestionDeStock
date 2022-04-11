@@ -140,8 +140,7 @@ namespace STIVE_GestionStock.Controllers
                 order.Update();
 
             }
-
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Home", new { message = "Merci pour votre achat" });
         }
 
         public IActionResult DeleteOrder()

@@ -166,7 +166,7 @@ namespace STIVE_GestionStock.Controllers
                 _login.SetFournisseur(0);
 
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Home", new { message = "Bon de commande envoyé !" });
         }
 
         public IActionResult DeleteOrderForm()
