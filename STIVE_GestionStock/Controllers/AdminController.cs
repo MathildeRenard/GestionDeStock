@@ -208,7 +208,7 @@ namespace STIVE_GestionStock.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            ViewBag.Provider = Provider.GetProviders();
+            //ViewBag.Provider = Provider.GetProviders();
             ViewBag.Provider = Provider.GetProvider(id);
             return View();
         }
@@ -333,14 +333,14 @@ namespace STIVE_GestionStock.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            ViewBag.Warehouse = Warehouse.GetWarehouses();
+            //ViewBag.Warehouse = Warehouse.GetWarehouses();
             ViewBag.Warehouse = Warehouse.GetWarehouse(id);
             return View();
         }
 
-        public IActionResult SubmitEditFormWarehouse(Warehouse warehouse)
+        public IActionResult SubmitEditFormWarehouse(Warehouse warehouse,int id)
         {
-            
+            warehouse.Id_Warehouse = id;
             warehouse.Update();
 
             return RedirectToAction("ListWarehouse");
