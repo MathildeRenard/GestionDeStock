@@ -351,12 +351,41 @@ namespace STIVE_GestionStock.Models
         }
         public void Delete(int id)
         {
-            request = "DELETE FROM User WHERE ID=@id";
             connection.Open();
+            string request = "SELECT ID FROM stive.order WHERE ID_User=@id";
             command = new MySqlCommand(request, connection);
             command.Parameters.Add(new MySqlParameter("@id", id));
-            command.ExecuteScalar();
+            MySqlDataReader reader = command.ExecuteReader();
+
+            reader.Read();
+            int id_order = reader.GetInt32(0);
+            reader.Close();
             command.Dispose();
+
+            string request2 = "DELETE FROM productorder WHERE ID_Order=@id";
+            
+            command = new MySqlCommand(request2, connection);
+            command.Parameters.Add(new MySqlParameter("@id", id_order));
+            command.ExecuteScalar();
+
+            command.Dispose();
+
+            string request1 = "DELETE FROM stive.order WHERE ID_User=@id";
+            command = new MySqlCommand(request1, connection);
+            command.Parameters.Add(new MySqlParameter("@id", id));
+            command.ExecuteScalar();
+
+            command.Dispose();
+
+            
+            string request3 = "DELETE FROM User WHERE ID=@id";
+            
+            command = new MySqlCommand(request3, connection);
+            command.Parameters.Add(new MySqlParameter("@id", id));
+            command.ExecuteScalar();
+            
+            command.Dispose();
+           
             connection.Close();
         }
     }
