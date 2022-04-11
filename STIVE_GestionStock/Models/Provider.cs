@@ -93,7 +93,8 @@ namespace STIVE_GestionStock.Models
                 {
                     Id = reader.GetInt32(0),
                     Name = reader.GetString(1),
-                    Mail = reader.GetString(2),
+                    Adress = reader.GetString(2),
+                    Mail = reader.GetString(3)
                 };
             }
             reader.Close();

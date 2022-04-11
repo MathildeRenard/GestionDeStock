@@ -208,7 +208,7 @@ namespace STIVE_GestionStock.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            ViewBag.Provider = Provider.GetProviders();
+            //ViewBag.Provider = Provider.GetProviders();
             ViewBag.Provider = Provider.GetProvider(id);
             return View();
         }
