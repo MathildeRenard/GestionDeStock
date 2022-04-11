@@ -19,9 +19,10 @@ namespace STIVE_GestionStock.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index(string message)
+        public IActionResult Index(string message, string err)
         {
             ViewBag.Message = message;
+            ViewBag.Err = err;
             return View(Product.GetProducts("Available = true"));
         }
 

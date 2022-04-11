@@ -20,17 +20,28 @@
     <br />
 }
 
-@*<input type="search" id="searchbar" onkeyup="search()" class="form-control rounded" placeholder="Rechercher sur la page..." aria-label="Search"
-       aria-describedby="search-addon" />
-<div class="btn-group my-3">
-    <button type="button" id="tri" class="btn bg-dark dropdown-toggle text-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Trier
-    </button>
-    <div class="dropdown-menu">
-        <a style="cursor:pointer;" class="dropdown-item" onclick="tri(this,'croissant')">Trier par : Prix croissant</a>
-        <a style="cursor:pointer;" class="dropdown-item" onclick="tri(this,'decroissant')">Trier par : Prix décroissant</a>
+@if (ViewBag.Err != null)
+{
+    <br />
+    <div class="row m-1 justify-content-center">
+        <div class="alert alert-danger col-6 p-1 text-center">
+            @ViewBag.Err
+        </div>
     </div>
-</div>*@
+    <br />
+}
+
+@*<input type="search" id="searchbar" onkeyup="search()" class="form-control rounded" placeholder="Rechercher sur la page..." aria-label="Search"
+           aria-describedby="search-addon" />
+    <div class="btn-group my-3">
+        <button type="button" id="tri" class="btn bg-dark dropdown-toggle text-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Trier
+        </button>
+        <div class="dropdown-menu">
+            <a style="cursor:pointer;" class="dropdown-item" onclick="tri(this,'croissant')">Trier par : Prix croissant</a>
+            <a style="cursor:pointer;" class="dropdown-item" onclick="tri(this,'decroissant')">Trier par : Prix décroissant</a>
+        </div>
+    </div>*@
 
 <br />
 

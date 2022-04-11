@@ -47,7 +47,7 @@ namespace STIVE_GestionStock.Controllers
                 int qteDispo = product.Quantity - Qte;
                 if (qteDispo < 0 && product.Auto_replenishment == false)
                 {
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Home", new { err = "Ajout du produit impossible, stock insufisant !" });
                 }
 
                 bool bAdd = true;
